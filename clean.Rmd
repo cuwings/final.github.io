@@ -1,0 +1,171 @@
+---
+title: "Clean"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(haven)
+```
+
+### Loading the `TCHOL` dataset with the data of response variable `total cholesterol`
+```{r}
+tchol_df = 
+  data <- read_xpt("data/xpt/P_TCHOL.XPT") |> 
+  janitor::clean_names() |>
+  select(id = seqn, total_cholesterol = lbxtc) |> 
+  drop_na()
+```
+
+### Loading the first demographic dataset `P_DEMO`.
+```{r}
+demo1_df = 
+  data <- read_xpt("data/xpt/P_DEMO.XPT") |> 
+  janitor::clean_names() |> 
+  select(id = seqn, age = ridageyr, gender = riagendr, race = ridreth3, 
+         marital_status = dmdmartz, education_level_20 = dmdeduc2) |> #only include the variables of id, age, gender, race, marital status, and education level.
+  filter(age >= 18) |> # Only include the participants with age equal and greater than 18.
+  mutate(
+    gender = case_when(
+      gender == 1 ~ "Male",
+      gender == 2 ~ "Female",
+      TRUE ~ as.character(gender)), #categorize variable gender.
+    race = case_when(
+      race %in% c(1, 2) ~ "Hispanic",
+      race == 3 ~ "Non-Hispanic White",
+      race == 4 ~ "Non-Hispanic Black",
+      race == 6 ~ "Non-Hispanic Asian",
+      race == 7 ~ "Other Race",
+      TRUE ~ as.character(race)), #categorize variable race.
+    marital_status = case_when(
+      marital_status %in% c(77, 99, ".") ~ NA_character_,
+      marital_status == 1 ~ "Married/Living with Partner",
+      marital_status == 2 ~ "Widowed/Divorced/Separated",
+      marital_status == 3 ~ "Never married",
+      TRUE ~ as.character(marital_status)), #categorize variable marital status.
+    education_level_20 = case_when(
+      education_level_20 %in% c(7, 9, ".") ~ NA_character_,
+      education_level_20 == 1 ~ "Less than 9th grade",
+      education_level_20 == 2 ~ "9-11th grade",
+      education_level_20 == 3 ~ "High school graduate/GED or equivalent",
+      education_level_20 == 4 ~ "Some college or AA degree",
+      education_level_20 == 5 ~ "College graduate or above",
+      TRUE ~ as.character(education_level_20)) #categorize education level status.
+   )
+
+demo1_df
+```
+
+### Loading the second demographic dataset `P_BMX` with data of body mass index.
+```{r}
+bmi_df = 
+  data <- read_xpt("data/xpt/P_BMX.XPT") |> 
+  janitor::clean_names() |>
+  select(id = seqn, bmi = bmxbmi) |> 
+  drop_na()
+```
+
+### Loading the third demographic dataset `P_INQ` with data of family monthly poverty level.
+```{r}
+income_df = 
+  data <- read_xpt("data/xpt/P_INQ.XPT") |> 
+  janitor::clean_names() |>
+  select(id = seqn, poverty_level = indfmmpi) |> 
+  drop_na() |> 
+  mutate(
+    poverty_level = case_when(
+      poverty_level < 1.3 ~ "Below 130% of Poverty Guidelines",
+      between(poverty_level, 1.3, 1.85) ~ "Between 130% and 185% of Poverty Guidelines",
+      poverty_level > 1.85 ~ "Above 185% of Poverty Guidelines",
+      TRUE ~ as.character(poverty_level))
+        )
+```
+
+### Left join the income_df and bmi_df on demo1_df as the dataset with all the demographic data.
+```{r}
+demo_df <- demo1_df |> 
+  left_join(income_df, by = "id") |> 
+  left_join(bmi_df, by = "id") |> 
+  drop_na(age, gender, race, bmi) 
+```
+
+### Loading the first explanatory variable `physical actively` from dataset `P_PAQ`.
+```{r}
+activity_df = 
+  data <- read_xpt("data/xpt/P_PAQ.XPT") |> 
+  janitor::clean_names() |>
+  select(id = seqn, paq605, paq650, paq620, paq635, paq665) |> 
+  drop_na() |> 
+  mutate(
+    physical_activity = case_when(
+      paq605 == 1 | paq650 == 1 ~ "Vigorous activity",
+      paq620 == 1 | paq635 == 1 | paq665 == 1 ~ "Moderate activity",
+      paq665 == 2 ~ "Light/Unknown activity",
+      TRUE ~ NA_character_ )
+        ) |> 
+  select(id, physical_activity)
+```
+
+### Loading the second explanatory variable `sleep hours` from dataset `P_SLQ`.
+```{r}
+sleep_df = 
+  data <- read_xpt("data/xpt/P_SLQ.XPT") |> 
+  janitor::clean_names() |>
+  select(id = seqn, sleep_hour = sld012) |> 
+  drop_na()
+```
+
+### Loading the third explanatory variable `alcohol use` from dataset `P_ALQ`.
+```{r}
+alcohol_df = 
+  data <- read_xpt("data/xpt/P_ALQ.XPT") |> 
+  janitor::clean_names() |>
+  mutate(
+    alcohol_use_cat = case_when(
+      alq121 %in% c(0, 10, 9, 8) ~ "Light Drinker",
+      alq121 %in% c(7, 6, 5, 4) ~ "Moderate Drinker",
+      alq121 %in% c(3, 2, 1) ~ "Heavy Drinker",
+      alq121 %in% c(77, 99, ".") ~ NA_character_),
+     alcohol_use_order = case_when(
+      alq121 == 0 ~ 1,
+      alq121 == 10 ~ 2,
+      alq121 == 9 ~ 3,
+      alq121 == 8 ~ 4,
+      alq121 == 7 ~ 5,
+      alq121 == 6 ~ 6,
+      alq121 == 5 ~ 7,
+      alq121 == 4 ~ 8,
+      alq121 == 3 ~ 9,
+      alq121 == 2 ~ 10,
+      alq121 == 1 ~ 11)
+        ) |> 
+   select(id = seqn, alcohol_use_cat, alcohol_use_order) |> 
+   drop_na()
+```
+
+### Loading the fourth explanatory variable `smoking` from dataset `P_COT`.
+```{r}
+smoking_df = 
+  data <- read_xpt("data/xpt/P_COT.XPT") |> 
+  janitor::clean_names() |>
+  select(id = seqn, cotinine = lbxcot) |> 
+  drop_na()
+```
+
+```{r}
+combine_df = 
+  tchol_df |> 
+  left_join(demo_df, by = "id") |>
+  left_join(activity_df, by = "id") |>
+  left_join(sleep_df, by = "id") |>
+  left_join(alcohol_df, by = "id") |>
+  left_join(smoking_df, by = "id") |> 
+  drop_na(age, gender, race)
+
+write.csv(combine_df, file = "data/combine.csv")
+```
+

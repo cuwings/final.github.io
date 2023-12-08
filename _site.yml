@@ -1,0 +1,32 @@
+name: "Yay internet!"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Prevalence Analysis"
+      href: eda.html
+    - text: "Modeling"
+      menu:
+        - text: "Clean Data"
+          href: clean.html
+        - text: "Exploratory Analysis"
+          href: Exploratory-Analysis.html
+        - text: "Build Model"
+          href: model.html
+    - text: "Predict Your Risk"
+      href: https://ruiqixue.shinyapps.io/shiny/
+    - text: "Project Report"
+      href: Exploratory-Analysis.html
+    - icon: fa-envelope fa-lg
+      menu:
+        - text: "Ruiqi Xue"
+          href: mailto:rx2236@columbia.edu
+    - icon: fa-github fa-lg
+      menu: 
+        - text: "Ruiqi Xue"
+          href: http://github.com/RuiqiXue126/
+      
+output:
+  html_document:
+    theme: cosmo
+    

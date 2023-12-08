@@ -1,0 +1,12 @@
+name: shiny
+title: shiny
+username: ruiqixue
+account: ruiqixue
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10749704
+bundleId: 8023634
+url: https://ruiqixue.shinyapps.io/shiny/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

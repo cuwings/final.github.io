@@ -1,0 +1,190 @@
+---
+title: "Exploratory Analysis"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+Load packages and import datasets.
+```{r, message = FALSE}
+library(ggridges)
+library(tidyverse)
+library(plotly)
+
+combine_df = read_csv("data/combine.csv") 
+
+combine_tc_binary = read_csv("data/combine.csv") |> 
+  mutate(
+    total_cholesterol = case_when(
+      total_cholesterol < 200 ~ "desirable",
+      total_cholesterol >= 200 ~ "above desirable",
+      TRUE ~ as.character(total_cholesterol)
+    )
+  )
+```
+
+## Ditribution of Total Cholesterol
+
+The maximum is `r max ( combine_df $ total_cholesterol)`, the 75% quantile is `r quantile(combine_df $ total_cholesterol,0.75)`, the median is `r median(combine_df $ total_cholesterol)` ,  the low 25% quantile is `r quantile(combine_df $ total_cholesterol,0.25)` , the minimum is `r min ( combine_df $ total_cholesterol)`. And the distribution is shown as below. 
+```{r, message = FALSE}
+TC_distri = ggplot(combine_df, aes(x = total_cholesterol)) +
+  geom_histogram(fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(
+    x = "Total Cholesterol",
+    y = "Frequency",
+    title = "Distribution of Total Cholesterol"
+  ) +
+  theme_minimal()
+
+ggplotly(TC_distri)
+```
+
+The presented data illustrates the distribution of `Total Cholesterol`, revealing a notable *right-skewed graph*. This skewness is indicative of a pronounced prevalence of participants whose cholesterol levels are concentrated within the range of 130 to 200 mg/dL. 
+
+According to CDC https://www.cdc.gov/cholesterol/index.htm. High cholesterol is defined as total cholesterol level greater than 200ng/ml. We use 200 ng/ml as cutoff point in the following analysis. Total cholesterol smaller than 200 ng/ml is defined as "desirable" ,  otherwise it is defined as " above desirable". 
+
+## Relationship between Sleep Hours & Total Cholesterol
+
+```{r, message = FALSE, warning = FALSE}
+sleep_hour_distri = ggplot(combine_df, aes(x = sleep_hour)) +
+  geom_histogram(binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Sleep Hours",
+       x = "Sleep Hours",
+       y = "Frequency") +
+  theme_minimal()
+
+ggplotly(sleep_hour_distri)
+```
+
+The distribution of `Sleep Hours` depicted above exhibits characteristics consistent with a *normal distribution*, showcasing a bell-shaped curve. This normal distribution suggests that the majority of individuals in the sample population tend to obtain approximately 7 to 8 hours of sleep per night. The peak of the curve is centered around this range, indicating a prevalent and typical sleep duration among the surveyed participants. 
+
+
+
+```{r, message = FALSE, warning = FALSE}
+TC_sleep = 
+  plot_ly(combine_tc_binary, x = ~total_cholesterol, y = ~sleep_hour, color = ~total_cholesterol, type = "box", colors = "viridis") |> 
+  layout(title = "Total Cholesterol & Sleep Hours",
+         xaxis = list(title = "Total Cholesterol"),
+         yaxis = list(title = "Sleep Hours"))
+
+TC_sleep
+```
+
+The presented *boxplot* visually represents the distribution of `Sleep Hours` in conjunction with `Total Cholesterol` levels*, revealing a remarkable similarity in distribution patterns between the group categorized as "desirable" and those classified as "above desirable". This observation suggests that individuals within both categories exhibit comparable trends in sleep duration.
+
+
+
+
+## Relationship Between Physical Activity & Total Cholesterol
+
+```{r, message = FALSE, warning = FALSE}
+combine_tc_binary = 
+  combine_tc_binary |> 
+  drop_na(physical_activity)
+
+TC_activity = ggplot(combine_tc_binary, aes(x = physical_activity, fill = total_cholesterol)) +
+  geom_bar(position = "stack") +
+  scale_fill_brewer(palette = "lightgray") +
+  labs(
+    x = "Physical Activity",
+    y = "Frequency",
+    fill = "Total Cholesterol",
+    title = "Relationship between Physical Activity and Total Cholesterol"
+  ) +
+  theme_minimal()
+
+ggplotly(TC_activity)
+```
+
+The above bar chart illustrates the association between `Physical Activity` and `Total Cholesterol`. It reveals that the majority of individuals engage in vigorous physical activity. Surprisingly, the prevalence of individuals with Total Cholesterol levels above the desirable range remains consistent across three distinct levels of Physical Activity. 
+
+
+## Relationship Between  Alchohol Use & Total Cholesterol 
+
+```{r message = FALSE, warning = FALSE }
+combine_tc_binary = 
+  combine_tc_binary %>% 
+  drop_na(alcohol_use_cat) %>% 
+  mutate(alcohol_use_cat = factor(alcohol_use_cat, levels=c("Light Drinker", "Moderate Drinker", "Heavy Drinker")))
+
+
+Al_distri = ggplot(combine_tc_binary, aes(x =  alcohol_use_cat)) +
+  geom_bar(fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(
+    x = "Drinking Habits",
+    y = "Frequency",
+    title = "Distribution of Drinking Habits"
+  ) +
+  theme_minimal()
+
+ggplotly(Al_distri)
+```
+
+The distribution of drinking habits is a right skewed one, with most people are categorised in "light drinker", some people in "moderate drinker", and least people,but still almost 1000, in heavy drinker. 
+
+
+```{r message = FALSE, warning = FALSE}
+combine_tc_binary %>% 
+  group_by(alcohol_use_cat,total_cholesterol) %>% 
+  summarise(N = n()) %>% 
+  mutate (Proportion = N/sum(N),
+          ) %>% 
+  plot_ly (x=~alcohol_use_cat, y= ~ Proportion * 100, type = "bar", color = ~total_cholesterol) %>% 
+  layout(barmode = "stack",
+         title = "Distribution of High Total Cholersterol by Drinking habits",
+         xaxis = list(title = "Drinking Habits"),
+         yaxis = list(title = "Percentage (%)")
+         )
+```
+According to the graph, the percentage of high cholesterol increase as people drink more. 30% percent of the light drinkers have high cholesterol while 40 % of heavy drinker have high cholesterol level. 
+
+
+### Relationship between Serum Cotinine and Total Cholesterol 
+
+According to CDC(https://www.cdc.gov/biomonitoring/Cotinine_BiomonitoringSummary.html) the  cutoff point of cotinine for smoker and nonsmoker is 10ng/ml. The serum cotinie level in smoker and non-smoker distribute like this :
+
+```{r message = FALSE, warning = FALSE}
+
+combine_tc_binary =
+  combine_tc_binary %>% 
+  mutate(smoking_status_bi = ifelse(cotinine > 10, "Smoker", "Nonsmoker"),
+         smoking_status_bi = factor(smoking_status_bi, levels = c("Nonsmoker","Smoker")))
+  
+combine_tc_binary %>% 
+   filter (smoking_status_bi == "Smoker") %>% 
+    ggplot (aes(x= cotinine)) +
+    geom_density() +
+    labs (title = "Serum Cotinine Value in Smoker" )
+
+```
+
+The cotinine level is a left-skew line in smokers. 
+
+```{r message = FALSE, warning = FALSE}
+combine_tc_binary %>% 
+   filter (smoking_status_bi == "Nonsmoker") %>% 
+    ggplot (aes(x= cotinine)) +
+    geom_density() +
+    labs (title = "Serum Cotinine Value in Nonsmoker" )
+```
+
+The cotinine level is centered around 0.00 ng/ml in non-smokers. 
+
+```{r message = FALSE, warning = FALSE }
+combine_tc_binary  %>% 
+  group_by(smoking_status_bi,total_cholesterol) %>% 
+  summarise(N = n()) %>% 
+  mutate (Proportion = N/sum(N),
+          ) %>% 
+  plot_ly (x=~smoking_status_bi, y= ~ Proportion * 100, type = "bar", color = ~total_cholesterol) %>% 
+  layout(barmode = "stack",
+         title = "Distribution of High Total Cholersterol by Smoker and Nonsmoker",
+         xaxis = list(title = "Smoking status"),
+         yaxis = list(title = "Percentage (%)")
+         )
+```
+
+According to the graph, the proportions of total cholesterol level  in smoker and non-smoker are almost the same. 
+

@@ -1,0 +1,545 @@
+---
+title: "Model"
+author: "Shihui Peng"
+date: "2023-12-04"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+Load packages and import datasets.
+```{r, message=FALSE}
+# load packages and basic settings
+library(tidyverse)
+library(modelr)
+library(purrr)
+library(MASS)
+
+set.seed(1)
+
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+
+# import data (currently: using direct path)
+
+# total cholesterol < 200 -> 0, >= 200 -> 1
+model_df = read_csv("data/combine.csv") |> 
+  mutate(
+    chol_cat = ifelse(total_cholesterol < 200, 0, 1),
+    alcohol_use_order = as.factor(alcohol_use_order),
+    physical_activity = relevel(as.factor(physical_activity), ref = "Light/Unknown activity")
+  )
+
+# create subset for cholestorl level of desirable level and of above desirable level 
+desire_df = 
+  model_df |> 
+  filter(chol_cat == 0)
+
+ab_desire_df = 
+  model_df |> 
+  filter(chol_cat == 1)
+```
+
+
+# Description of variables features
+
+## Continuous variables
+
+### Methods
+
+For continuous variables, we use **mean** and **standard deviation** (std) to describe the distribution in overall samples, samples of desirable cholesterol level (defined as "control"), and samples of above-desirable cholesterol level (defined as "case"). Then, we use **t-test** to examine whether the means of these variables are significantly different between case group and control group (significance level = 0.05).
+```{r, message=FALSE}
+# mean and std for continuous variables, overall
+list_conti_all = list(
+  age = model_df$age, 
+  bmi = model_df$bmi, 
+  sleep_hour = model_df$sleep_hour, 
+  cotinine = model_df$cotinine,
+  chol_cat = model_df$chol_cat
+) |> 
+  as.data.frame()
+
+list_conti_all_clean = 
+  list_conti_all[-5] |> 
+  lapply(na.omit)
+
+mean_all = sapply(list_conti_all_clean, mean) |> 
+  as.data.frame() |> 
+  rename(overall_mean = "sapply(list_conti_all_clean, mean)")
+
+std_all = sapply(list_conti_all_clean, sd) |> 
+  as.data.frame() |> 
+  rename(overall_std = "sapply(list_conti_all_clean, sd)")
+
+# p-value of t test for continuous variables
+t_test = function(variable) {
+  t_test_result = t.test(list_conti_all[[variable]] ~ list_conti_all$chol_cat)
+  return(data.frame(
+    variable = variable,
+    p_value = t_test_result$p.value
+  ))
+}
+
+p_value = 
+  lapply(c("age", "bmi", "sleep_hour", "cotinine"), t_test) |>
+  bind_rows() |> 
+  as.data.frame()
+
+# mean and std for all continuous variables, among samples of desirable cholesteral level (named them as "control")
+list_conti_desire = list(
+  age = desire_df$age, 
+  bmi = desire_df$bmi, 
+  sleep_hour = desire_df$sleep_hour, 
+  cotinine = desire_df$cotinine
+) |> 
+  as.data.frame() |> 
+  lapply(na.omit)
+
+mean_desire = sapply(list_conti_desire, mean) |> 
+  as.data.frame() |> 
+  rename(control_mean = "sapply(list_conti_desire, mean)")
+
+std_desire = sapply(list_conti_desire, sd) |> 
+  as.data.frame() |> 
+  rename(control_std = "sapply(list_conti_desire, sd)")
+
+# mean and std for all continuous variables, among samples of above-desirable cholesterol level (named them as "case")
+list_conti_ab_desire = list(
+  age = ab_desire_df$age, 
+  bmi = ab_desire_df$bmi, 
+  sleep_hour = ab_desire_df$sleep_hour, 
+  cotinine = ab_desire_df$cotinine
+) |> 
+  as.data.frame() |> 
+  lapply(na.omit)
+
+mean_ab_desire = sapply(list_conti_ab_desire, mean) |> 
+  as.data.frame() |> 
+  rename(case_mean = "sapply(list_conti_ab_desire, mean)")
+
+std_ab_desire = sapply(list_conti_ab_desire, sd) |> 
+  as.data.frame() |> 
+  rename(case_std = "sapply(list_conti_ab_desire, sd)")
+```
+
+### description table
+
+```{r}
+# combind - continuous
+conti_des_df =
+  as.data.frame(cbind(mean_all, std_all, mean_desire, std_desire, mean_ab_desire, std_ab_desire, p_value))
+
+conti_des_df = conti_des_df[, -grep("variable", colnames(conti_des_df))] |> 
+  knitr::kable(digits = 3)
+
+conti_des_df
+```
+
+## Binary and categorical variables
+
+### Methods
+
+For binary and categorical variables, we use **count** (n) and **percentage** (pct) to describe the distribution in overall samples, samples of desirable cholesterol level (defined as "control"), and samples of above-desirable cholesterol level (defined as "case"). Then, we use **chi-sq test** to examine whether the distribution of these variables are significantly different between case group and control group (significance level = 0.05).
+```{r}
+# n and pct for categorical variables, chi-sq test, overall
+list_cat_all = list (
+  gender = model_df$gender,
+  race = model_df$race,
+  marital = model_df$marital_status,
+  edu = model_df$education_level_20,
+  poverty = model_df$poverty_level,
+  phy = model_df$physical_activity,
+  alcohol = model_df$alcohol_use_cat,
+  chol_cat = model_df$chol_cat
+) |> 
+  as.data.frame()
+
+list_cat_all_clean = 
+  list_cat_all[-8] |> 
+  lapply(na.omit)
+
+cat_vars = names(list_cat_all_clean)
+
+count_all_function = function(variable) {
+  table_value = table(list_cat_all[[variable]], list_cat_all$chol_cat)
+  chi_sq_test = chisq.test(table_value)
+  
+  count = sapply(unique(list_cat_all_clean[[variable]], na.rm = TRUE), function(cat) sum(list_cat_all_clean[[variable]] == cat, na.rm = TRUE))
+   
+  total = sum(count)
+  pct = count / total
+  
+  result_df = tibble(
+    variable = names(count),
+    n = count,
+    pct = pct,
+    p_value = chi_sq_test$p.value
+    )
+  
+  return(result_df)
+  }
+
+cat_count_chisq = lapply(cat_vars, count_all_function) |> 
+  bind_rows() |> 
+  as.data.frame()
+
+# n and pct for categorical variables, among samples of desirable cholesteral level (named them as "control")
+list_cat_ctrl = list (
+  gender = desire_df$gender,
+  race = desire_df$race,
+  marital = desire_df$marital_status,
+  edu = desire_df$education_level_20,
+  poverty = desire_df$poverty_level,
+  phy = desire_df$physical_activity,
+  alcohol = desire_df$alcohol_use_cat
+) |> 
+  as.data.frame() |> 
+  lapply(na.omit)
+
+cat_vars_ctrl = names(list_cat_ctrl)
+
+count_ctrl_function = function(variable) {
+  count = sapply(unique(list_cat_ctrl[[variable]], na.rm = TRUE), function(cat) sum(list_cat_ctrl[[variable]] == cat, na.rm = TRUE))
+   
+  total = sum(count)
+  pct = count / total
+  
+  result_df = tibble(
+    variable = names(count),
+    control_n = count,
+    control_pct = pct
+    )
+  
+  return(result_df)
+}
+
+cat_count_ctrl = lapply(cat_vars_ctrl, count_ctrl_function) |> 
+  bind_rows() |> 
+  as.data.frame()
+
+# n and pct for categorical variables, among samples of above-desirable cholesterol level (named them as "case")
+list_cat_case = list (
+  gender = ab_desire_df$gender,
+  race = ab_desire_df$race,
+  marital = ab_desire_df$marital_status,
+  edu = ab_desire_df$education_level_20,
+  poverty = ab_desire_df$poverty_level,
+  phy = ab_desire_df$physical_activity,
+  alcohol = ab_desire_df$alcohol_use_cat
+) |> 
+  as.data.frame() |> 
+  lapply(na.omit)
+
+cat_vars_case = names(list_cat_case)
+
+count_case_function = function(variable) {
+  count = sapply(unique(list_cat_case[[variable]], na.rm = TRUE), function(cat) sum(list_cat_case[[variable]] == cat, na.rm = TRUE))
+   
+  total = sum(count)
+  pct = count / total
+  
+  result_df = tibble(
+    variable = names(count),
+    case_n = count,
+    case_pct = pct
+    )
+  
+  return(result_df)
+}
+
+cat_count_case = lapply(cat_vars_case, count_case_function) |> 
+  bind_rows() |> 
+  as.data.frame()
+```
+
+### description table
+
+```{r, message=FALSE}
+cat_des_df =
+  cbind.data.frame(cat_count_chisq, cat_count_ctrl, cat_count_case) |> 
+  drop_na()
+
+cat_des_df = cat_des_df[, !duplicated(names(cat_des_df))] |> 
+  knitr::kable(digits = 3)
+
+cat_des_df
+```
+
+# Building model
+
+In this study, out response variable is total cholesterol level (`total_cholesterol`), and our explanatory variables are (1)cotinine (`cotinine`), (2) physical activity (`physical_activity`), and (3) alcohol use (`alcohol_use_cat`).  We decide to analyze the association step by step. (significance level = 0.05)
+
+## Check the dataset
+
+```{r, message=FALSE, warning=FALSE}
+
+model_df |> 
+  ggplot(aes(x = cotinine, y = total_cholesterol)) + geom_point() +
+  labs(title = "Total_cholesterol against serum cotinine", x = "Serum cotinine (ng/ml)", y = "Total cholesterol (mg/dL)")
+
+
+model_df |> 
+  ggplot(aes(x = alcohol_use_cat, y = total_cholesterol)) + geom_point() +
+  labs(title = "Total_cholesterol against alcohol use", x = "Alcohol use", y = "Total cholesterol (mg/dL)")
+
+
+model_df |> 
+  ggplot(aes(x = physical_activity, y = total_cholesterol)) + geom_point() +
+  labs(title = "Total_cholesterol against physical_activity", x = "Physical activity", y = "Total cholesterol (mg/dL)")
+
+model_df |> 
+  ggplot(aes(x = total_cholesterol)) + geom_density() +
+  labs(title = "Destribution of total_cholesterol", x = "Total cholesterol (mg/dL)")
+```
+
+* Based on the scatterplot, we can find slightly negative linear trends, but there is heteroscedasticity problem. Also, based on the density plot, we can find that the distribution of y is asymmetry. Therefore, we decide to use linear regression model with log-transformation on response variable (y) `total_cholesterol` for the following models.
+
+
+## Model selection
+
+
+### 1. main explanatory variable: cotinine
+
+
+#### Univariable linear regression: total_cholesterol = cotinine
+
+```{r, message=FALSE, warning=FALSE}
+fit_1 = lm(log(total_cholesterol) ~ cotinine, data = model_df)
+
+fit_1 |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+
+model_df |> 
+  modelr::add_residuals(fit_1) |> 
+  ggplot(aes(sample = resid)) +
+  stat_qq() +
+  stat_qq_line()
+```
+
+* We can see that cotinine is significantly associated with total cholesterol level. We also check the qq-plot and find that the residuals followed a normal distribution, which indicates a suitability of using linear regression. 
+* Therefore, we move forward to build multivariable regression.
+
+
+#### Multivariable linear regression
+
+fit_cot: log(total_cholesterol) = cotinine + age + gender + race + marital_status + education_level_20 + poverty_level
+
+```{r}
+fit_cot = lm(log(total_cholesterol) ~ cotinine + age + gender + race + marital_status + education_level_20 + poverty_level, data = model_df)
+
+fit_cot |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+```
+
+
+### 2. main explanatory variable: physical_activity
+
+
+#### Univariable linear regression: total_cholesterol = physical_activity
+
+```{r, message=FALSE}
+fit_2 = lm(log(total_cholesterol) ~ physical_activity, data = model_df)
+
+fit_2 |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+
+model_df |> 
+  modelr::add_residuals(fit_2) |> 
+  ggplot(aes(sample = resid)) +
+  stat_qq() +
+  stat_qq_line()
+```
+
+* We can see that physical_activity is not significantly associated with total cholesterol level. We also check the qq-plot and find that the residuals followed a normal distribution, which indicates a suitability of using linear regression. 
+* Therefore, we move forward to build multivariable regression.
+
+
+#### Multivariable linear regression
+
+fit_phy: log(total_cholesterol) = physical_activity + age + gender + race + marital_status + education_level_20 + poverty_level
+
+```{r}
+fit_phy = lm(log(total_cholesterol) ~ physical_activity + age + gender + race + marital_status + education_level_20 + poverty_level, data = model_df)
+
+fit_phy |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+```
+
+
+### 3. main explanatory variable: alcohol_use_cat
+
+
+#### Univariable linear regression: total_cholesterol = alcohol_use_cat
+
+```{r, message=FALSE, warning=FALSE}
+fit_3 = lm(log(total_cholesterol) ~ alcohol_use_cat, data = model_df)
+
+fit_3 |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+
+model_df |> 
+  modelr::add_residuals(fit_3) |> 
+  ggplot(aes(sample = resid)) +
+  stat_qq() +
+  stat_qq_line()
+```
+
+* We can see that alcohol_use_cat is significantly associated with total cholesterol level. We also check the qq-plot and find that the residuals followed a normal distribution, which indicates a suitability of using linear regression. 
+* Therefore, we move forward to build multivariable regression.
+
+
+#### Multivariable linear regression
+
+fit_alc: log(total_cholesterol) = alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level
+
+```{r}
+fit_alc = lm(log(total_cholesterol) ~ alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level, data = model_df)
+
+fit_alc |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+```
+
+
+### 4. explanatory variables: cotinine, physical_activity, and alcohol_use_cat
+
+fit_full: log(total_cholesterol) = cotinine + physical_activity + alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level
+
+```{r}
+fit_full = lm(log(total_cholesterol) ~ cotinine + physical_activity + alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level, data = model_df)
+
+fit_full |> 
+  broom::tidy() |> 
+  knitr::kable(digits = 3)
+```
+
+
+### 5. Comparison among models: AIC (还没改)
+```{r}
+fit_full = lm(log(total_cholesterol) ~ cotinine + physical_activity + alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level, data = model_df)
+
+test_aic = stepAIC(fit_full, direction = "both", trace = FALSE)
+
+summary(test_aic)
+
+# AIC result: log(total_cholesterol) ~ alcohol_use_cat + gender + race + marital_status + education_level_20 + poverty_level
+```
+
+* Based on the output, we can find the best model optimized by comparing AIC value is `log(total_cholesterol) = alcohol_use_cat + gender + race + marital_status + education_level_20 + poverty_level`. However, we think variable age is an essential variable when studying health outcome, such as total cholesterol in this study. Therefore, we decide to add variable age into this model, and summary the final model for comparing is `log(total_cholesterol) = alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level`, which is the same as model `fit_alc`.
+
+
+### 6. Backwawrd selection on full model
+
+```{r}
+fit_backward = step(fit_full, direction = "backward")
+# backward result: log(total_cholesterol) ~ alcohol_use_cat + gender + race + marital_status + education_level_20 + poverty_level
+```
+
+* Based on the output, we can find the best model optimized by backward selection summary for full model with log transfermation on y is `log(total_cholesterol) = alcohol_use_cat + gender + race + marital_status + education_level_20 + poverty_level`. However, we think variable age is an essential variable when studying health outcome, such as total cholesterol in this study. Therefore, we decide to add variable age into this model, and summary the final model for comparing is `log(total_cholesterol) = alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level`, which is the same as model `fit_alc`.
+
+### 7. Stepwise selection on full model
+```{r}
+fit_stepwise = step(fit_full)
+# stepwise result: log(total_cholesterol) ~ alcohol_use_cat + gender + race + marital_status + education_level_20 + poverty_level
+```
+
+* Based on the output, we can find the best model optimized by stepwise selection summary for full model with log transfermation on y is `log(total_cholesterol) = alcohol_use_cat + gender + race + marital_status + education_level_20 + poverty_level`. However, we think variable age is an essential variable when studying health outcome, such as total cholesterol in this study. Therefore, we decide to add variable age into this model, and summary the final model for comparing is `log(total_cholesterol) = alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level`, which is the same as model `fit_alc`.
+
+### 8. Comparison among models: cross validation
+
+Based on the above steps, we now are comparing four models: fit_cot, fit_phy, fit_alc, and fit_full.
+
+```{r, message = FALSE}
+model_cv_df = 
+  model_df |> 
+  mutate(
+    physical_activity = ifelse(physical_activity == "Light/Unknown activity", 0, ifelse(physical_activity == "Moderate activity", 1, 2)),
+    alcohol_use_cat = ifelse(alcohol_use_cat == "Light Drinker", 0, ifelse(alcohol_use_cat == "Moderate Drinker", 1, 2))
+    )
+
+# create training and testing sets
+cv_df =
+  model_cv_df |> 
+  crossv_mc(n = 100) |> 
+  mutate(
+    train = map(train, as_tibble),
+    test = map(test, as_tibble)
+  )
+
+cv_results =
+  cv_df |> 
+  mutate(
+    fit_cot = map(train, \(df) lm(log(total_cholesterol) ~ cotinine + age + gender + race + marital_status + education_level_20 + poverty_level, data = df)),
+    fit_phy = map(train, \(df) lm(log(total_cholesterol) ~ physical_activity + age + gender + race + marital_status + education_level_20 + poverty_level, data = df)),
+    fit_alc = map(train, \(df) lm(log(total_cholesterol) ~ alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level, data = df)),
+    fit_full = map(train, \(df) lm(log(total_cholesterol) ~ cotinine + physical_activity + alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level, data = df))
+  ) |> 
+  mutate(
+    rmse_fit_cot = map2_dbl(fit_cot, test, \(model, df) rmse(model, df)),
+    rmse_fit_phy = map2_dbl(fit_phy, test, \(model, df) rmse(model, df)),
+    rmse_fit_alc = map2_dbl(fit_alc, test, \(model, df) rmse(model, df)),
+    rmse_fit_full = map2_dbl(fit_full, test, \(model, df) rmse(model, df))
+  )
+
+cv_results |> 
+  dplyr::select(starts_with("rmse")) |> 
+  pivot_longer(
+    everything(),
+    names_to = "model_type",
+    values_to = "rmse",
+    names_prefix = "rmse_"
+  ) |> 
+  ggplot(aes(x = model_type, y = rmse)) + geom_violin()
+```
+
+* Based on the violin plot, these four models have similar spread of rmses.
+
+
+### 6. Comparison among models: r square
+
+```{r}
+rsquare_fit_cot = rsquare(fit_cot, data = model_df)
+rsquare_fit_phy = rsquare(fit_phy, data = model_df)
+rsquare_fit_alc = rsquare(fit_alc, data = model_df)
+rsquare_fit_full = rsquare(fit_full, data = model_df)
+
+cbind(rsquare_fit_cot, rsquare_fit_phy, rsquare_fit_alc, rsquare_fit_full) |> 
+  knitr::kable()
+```
+
+* Based on the violin plot, these four models have similar r square values.
+
+
+### Conclusion
+
+Based on the above model selection steps, we decide to use model `fit_alc: lm(log(total_cholesterol) = alcohol_use_cat + age + gender + race + marital_status + education_level_20 + poverty_level` as our final model.
+
+* Backward, stepwise, AIC value methods all indicate that `fit_alc` is the best.
+* With similar rmse distribution and r square, model `fit_alc` is less complex than model `fit_full`.
+* Then, we save this model as a RDS file for the following R shiny part.
+
+```{r}
+save_path = "fit_alc.rds"
+saveRDS(fit_alc, save_path)
+cat("Model saved as an RDS file:", save_path, "\n")
+```

@@ -1,0 +1,118 @@
+---
+title: "Shiny Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(viridis)
+library(shiny)
+
+mymodel = readRDS("fit_alc.rds")
+
+shiny_df = read_csv("data/combine.csv") |>
+  drop_na() |>
+  mutate(poverty_income = case_match(poverty_level,
+                             "Above 185% of Poverty Guidelines" ~ "Greater than $13,856",
+                             "Below 130% of Poverty Guidelines" ~ "Between $9,737 and $13,856",
+                             "Between 130% and 185% of Poverty Guidelines" ~"Below $9,737"
+                             ))
+```
+
+
+
+
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+genders = shiny_df |> distinct(gender) |> pull()
+
+radioButtons(inputId = "gender_choice", 
+             label = h3("Select gender:"),
+             choices = genders, 
+             selected = "Female")
+
+textInput(inputId = "age_input",
+          label = h3("Enter your age:"),
+          value = 22)
+
+races = shiny_df |> distinct(race) |> pull()
+
+selectInput(inputId = "race_choice",
+            label = h3("Select race:"),
+            choices = races,
+            selected = "Non-Hispanic Asian")
+
+marital = shiny_df |> distinct(marital_status) |> pull()
+
+radioButtons(inputId = "marital_choice",
+            label = h3("Select marital status:"),
+            choices = marital,
+            selected = "Never married")
+
+education = shiny_df |> distinct(education_level_20) |> pull()
+
+selectInput(inputId = "education_choice",
+            label = h3("Select education level:"),
+            choices = education,
+            selected = "College graduate or above")
+
+incomes = shiny_df |> distinct(poverty_income) |> pull()
+
+radioButtons(inputId = "income_choice", 
+             label = h3("Select average family income:"),
+             choices = incomes, 
+             selected = "Greater than $13,856")
+
+alcohols = c("Never in the last year", "1 to 2 times in the last year", "3 to 6 times in the last year", "7 to 11 times in the last year", "Once a month", "2 to 3 times a month", "Once a week", "2 times a week", "3 to 4 times a week", "Nearly every day", "Every day")
+
+selectInput(inputId = "alcohol_choice",
+            label = h3("Select how often did you drink any type of alcoholic beverage during the past 12 months:"),
+            choices = alcohols,
+            selected = "Never in the last year")
+
+alco_choice = renderText({input[["alcohol_choice"]]})
+
+al = reactive(input$"alcohol_choice")
+
+
+#alcoh_level = case_when(input[["alcohol_choice"]] %in% c("Never in the last year", "1 to 2 times in the last year", "3 to 6 times in the last year", "7 to 11 times in the last year") ~ "Light Drinker", input[["alcohol_choice"]] %in% c())
+
+#user_data = data.frame(
+  #alcohol_use_cat = value1,
+  #age= value2)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderPrint({ 
+  input[["gender_choice"]]
+})
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
