@@ -10,7 +10,7 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(haven)
-
+library(sf)
 knitr::opts_chunk$set(
   warning = FALSE, 
   message = FALSE,
