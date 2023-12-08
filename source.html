@@ -11,7 +11,7 @@
 
 
 
-<title>Clean</title>
+<title>Data Sources and Cleaning</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -338,7 +338,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="source.html">Data Sources</a>
+      <a href="clean.html">Clean Data</a>
     </li>
     <li>
       <a href="Exploratory-Analysis.html">Exploratory Analysis</a>
@@ -397,194 +397,82 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Clean</h1>
+<h1 class="title toc-ignore">Data Sources and Cleaning</h1>
 
 </div>
 
 
-<div
-id="loading-the-tchol-dataset-with-the-data-of-response-variable-total-cholesterol"
-class="section level3">
-<h3>Loading the <code>TCHOL</code> dataset with the data of response
-variable <code>total cholesterol</code></h3>
-<pre class="r"><code>tchol_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_TCHOL.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  select(id = seqn, total_cholesterol = lbxtc) |&gt; 
-  drop_na()</code></pre>
+<div id="data-sources" class="section level2">
+<h2>Data Sources</h2>
+<p>The datasets employed in our project originate from two distinct
+primary sources.</p>
+<p>For part 1, we utilized <a
+href="https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data">PLACES:
+Local Data for Better Health</a> to acquire model-based county estimates
+of the entire United States during the time period from 2020 to 2021.
+The data were provided by the CDC, Division of Population Health,
+Epidemiology and Surveillance Branch.The estimates encompass 36
+measures, spanning health outcomes, preventive services use, chronic
+disease-related health risk behaviors, disabilities, and health status.
+We are using several health-affecting behavior variables and the
+prevalence of High Cholesterol to evaluate and sorting out the most
+correlated risk factors to the outcome at the national level.</p>
+<p>For part 2, the resource is from the program <a
+href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?Cycle=2017-2020">The
+National Health and Nutrition Examination Survey (NHANES)</a> conducted
+by the (CDC) for the time period of 2017 to March 2020 Pre-pandemic. It
+combines interviews and physical examinations to collect a wide range of
+health-related information. NHANES involves sampling thousand of
+individuals across different age groups. Unlike the county estimates
+from part 1, this part provides individual data measurements of
+demographic characteristics, our selected risk factors from part 1 and
+our health outcome (High Cholesterol) to generate the regression model.
+This program divides different types of measuremens into
+sub-dateset:</p>
+<ul>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_TCHOL.htm">TCHOL</a></strong>:
+It include the measurement of serum total cholesterol levels to assess
+the risk of high cholesterol.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_DEMO.htm">P_DEMO</a></strong>:
+It provides first part of the individual demographic variables including
+age, gender, race, marital status, and education level.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_BMX.htm">P_BMX</a></strong>:
+Provides second part of the demographic variable, body mass index.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_BMX.htm">P_INQ</a></strong>:
+It has third part of the demographic variable, family monthly poverty
+level index based on participants’ monthly income.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_PAQ.htm#PAQ665">P_PAQ</a></strong>:
+It provides the first explanatory variable, respondent-level interview
+data on physical activities.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_SLQ.htm">P_SLQ</a></strong>:
+It provides the second explanatory variable, sleep hours in
+weekdays.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_ALQ.htm#ALQ121">P_ALQ</a></strong>:
+Provides the third explanatory variable, subjects’ drinking patterns in
+the past 12 months.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_COT.htm">P_COT</a></strong>:
+Provides the fourth explanatory variable, serum cotinine level, as the
+primary metabolites of nicotine to estimate the extent of tobacco
+use.</li>
+</ul>
 </div>
-<div id="loading-the-first-demographic-dataset-p_demo."
+<div id="data-import-and-tidy" class="section level2">
+<h2>Data Import and Tidy</h2>
+<div id="part-1-places-local-data-for-better-health"
 class="section level3">
-<h3>Loading the first demographic dataset <code>P_DEMO</code>.</h3>
-<pre class="r"><code>demo1_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_DEMO.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt; 
-  select(id = seqn, age = ridageyr, gender = riagendr, race = ridreth3, 
-         marital_status = dmdmartz, education_level_20 = dmdeduc2) |&gt; #only include the variables of id, age, gender, race, marital status, and education level.
-  filter(age &gt;= 18) |&gt; # Only include the participants with age equal and greater than 18.
-  mutate(
-    gender = case_when(
-      gender == 1 ~ &quot;Male&quot;,
-      gender == 2 ~ &quot;Female&quot;,
-      TRUE ~ as.character(gender)), #categorize variable gender.
-    race = case_when(
-      race %in% c(1, 2) ~ &quot;Hispanic&quot;,
-      race == 3 ~ &quot;Non-Hispanic White&quot;,
-      race == 4 ~ &quot;Non-Hispanic Black&quot;,
-      race == 6 ~ &quot;Non-Hispanic Asian&quot;,
-      race == 7 ~ &quot;Other Race&quot;,
-      TRUE ~ as.character(race)), #categorize variable race.
-    marital_status = case_when(
-      marital_status %in% c(77, 99, &quot;.&quot;) ~ NA_character_,
-      marital_status == 1 ~ &quot;Married/Living with Partner&quot;,
-      marital_status == 2 ~ &quot;Widowed/Divorced/Separated&quot;,
-      marital_status == 3 ~ &quot;Never married&quot;,
-      TRUE ~ as.character(marital_status)), #categorize variable marital status.
-    education_level_20 = case_when(
-      education_level_20 %in% c(7, 9, &quot;.&quot;) ~ NA_character_,
-      education_level_20 == 1 ~ &quot;Less than 9th grade&quot;,
-      education_level_20 == 2 ~ &quot;9-11th grade&quot;,
-      education_level_20 == 3 ~ &quot;High school graduate/GED or equivalent&quot;,
-      education_level_20 == 4 ~ &quot;Some college or AA degree&quot;,
-      education_level_20 == 5 ~ &quot;College graduate or above&quot;,
-      TRUE ~ as.character(education_level_20)) #categorize education level status.
-   )
-
-demo1_df</code></pre>
-<pre><code>## # A tibble: 9,693 × 6
-##        id   age gender race               marital_status      education_level_20
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;             
-##  1 109266    29 Female Non-Hispanic Asian Never married       College graduate …
-##  2 109267    21 Female Hispanic           Never married       Some college or A…
-##  3 109268    18 Female Non-Hispanic White &lt;NA&gt;                &lt;NA&gt;              
-##  4 109271    49 Male   Non-Hispanic White Never married       9-11th grade      
-##  5 109273    36 Male   Non-Hispanic White Never married       Some college or A…
-##  6 109274    68 Male   Other Race         Never married       Some college or A…
-##  7 109282    76 Male   Non-Hispanic White Married/Living wit… College graduate …
-##  8 109283    52 Male   Other Race         Widowed/Divorced/S… High school gradu…
-##  9 109284    44 Female Hispanic           Married/Living wit… 9-11th grade      
-## 10 109286    33 Female Non-Hispanic Asian Married/Living wit… College graduate …
-## # ℹ 9,683 more rows</code></pre>
+<h3>Part 1: PLACES: Local Data for Better Health</h3>
 </div>
-<div
-id="loading-the-second-demographic-dataset-p_bmx-with-data-of-body-mass-index."
-class="section level3">
-<h3>Loading the second demographic dataset <code>P_BMX</code> with data
-of body mass index.</h3>
-<pre class="r"><code>bmi_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_BMX.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  select(id = seqn, bmi = bmxbmi) |&gt; 
-  drop_na()</code></pre>
+<div id="part-2-nhanes" class="section level3">
+<h3>Part 2: NHANES</h3>
 </div>
-<div
-id="loading-the-third-demographic-dataset-p_inq-with-data-of-family-monthly-poverty-level."
-class="section level3">
-<h3>Loading the third demographic dataset <code>P_INQ</code> with data
-of family monthly poverty level.</h3>
-<pre class="r"><code>income_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_INQ.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  select(id = seqn, poverty_level = indfmmpi) |&gt; 
-  drop_na() |&gt; 
-  mutate(
-    poverty_level = case_when(
-      poverty_level &lt; 1.3 ~ &quot;Below 130% of Poverty Guidelines&quot;,
-      between(poverty_level, 1.3, 1.85) ~ &quot;Between 130% and 185% of Poverty Guidelines&quot;,
-      poverty_level &gt; 1.85 ~ &quot;Above 185% of Poverty Guidelines&quot;,
-      TRUE ~ as.character(poverty_level))
-        )</code></pre>
-</div>
-<div
-id="left-join-the-income_df-and-bmi_df-on-demo1_df-as-the-dataset-with-all-the-demographic-data."
-class="section level3">
-<h3>Left join the income_df and bmi_df on demo1_df as the dataset with
-all the demographic data.</h3>
-<pre class="r"><code>demo_df &lt;- demo1_df |&gt; 
-  left_join(income_df, by = &quot;id&quot;) |&gt; 
-  left_join(bmi_df, by = &quot;id&quot;) |&gt; 
-  drop_na(age, gender, race, bmi) </code></pre>
-</div>
-<div
-id="loading-the-first-explanatory-variable-physical-actively-from-dataset-p_paq."
-class="section level3">
-<h3>Loading the first explanatory variable
-<code>physical actively</code> from dataset <code>P_PAQ</code>.</h3>
-<pre class="r"><code>activity_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_PAQ.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  select(id = seqn, paq605, paq650, paq620, paq635, paq665) |&gt; 
-  drop_na() |&gt; 
-  mutate(
-    physical_activity = case_when(
-      paq605 == 1 | paq650 == 1 ~ &quot;Vigorous activity&quot;,
-      paq620 == 1 | paq635 == 1 | paq665 == 1 ~ &quot;Moderate activity&quot;,
-      paq665 == 2 ~ &quot;Light/Unknown activity&quot;,
-      TRUE ~ NA_character_ )
-        ) |&gt; 
-  select(id, physical_activity)</code></pre>
-</div>
-<div
-id="loading-the-second-explanatory-variable-sleep-hours-from-dataset-p_slq."
-class="section level3">
-<h3>Loading the second explanatory variable <code>sleep hours</code>
-from dataset <code>P_SLQ</code>.</h3>
-<pre class="r"><code>sleep_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_SLQ.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  select(id = seqn, sleep_hour = sld012) |&gt; 
-  drop_na()</code></pre>
-</div>
-<div
-id="loading-the-third-explanatory-variable-alcohol-use-from-dataset-p_alq."
-class="section level3">
-<h3>Loading the third explanatory variable <code>alcohol use</code> from
-dataset <code>P_ALQ</code>.</h3>
-<pre class="r"><code>alcohol_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_ALQ.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  mutate(
-    alcohol_use_cat = case_when(
-      alq121 %in% c(0, 10, 9, 8) ~ &quot;Light Drinker&quot;,
-      alq121 %in% c(7, 6, 5, 4) ~ &quot;Moderate Drinker&quot;,
-      alq121 %in% c(3, 2, 1) ~ &quot;Heavy Drinker&quot;,
-      alq121 %in% c(77, 99, &quot;.&quot;) ~ NA_character_),
-     alcohol_use_order = case_when(
-      alq121 == 0 ~ 1,
-      alq121 == 10 ~ 2,
-      alq121 == 9 ~ 3,
-      alq121 == 8 ~ 4,
-      alq121 == 7 ~ 5,
-      alq121 == 6 ~ 6,
-      alq121 == 5 ~ 7,
-      alq121 == 4 ~ 8,
-      alq121 == 3 ~ 9,
-      alq121 == 2 ~ 10,
-      alq121 == 1 ~ 11)
-        ) |&gt; 
-   select(id = seqn, alcohol_use_cat, alcohol_use_order) |&gt; 
-   drop_na()</code></pre>
-</div>
-<div
-id="loading-the-fourth-explanatory-variable-smoking-from-dataset-p_cot."
-class="section level3">
-<h3>Loading the fourth explanatory variable <code>smoking</code> from
-dataset <code>P_COT</code>.</h3>
-<pre class="r"><code>smoking_df = 
-  data &lt;- read_xpt(&quot;data/xpt/P_COT.XPT&quot;) |&gt; 
-  janitor::clean_names() |&gt;
-  select(id = seqn, cotinine = lbxcot) |&gt; 
-  drop_na()</code></pre>
-<pre class="r"><code>combine_df = 
-  tchol_df |&gt; 
-  left_join(demo_df, by = &quot;id&quot;) |&gt;
-  left_join(activity_df, by = &quot;id&quot;) |&gt;
-  left_join(sleep_df, by = &quot;id&quot;) |&gt;
-  left_join(alcohol_df, by = &quot;id&quot;) |&gt;
-  left_join(smoking_df, by = &quot;id&quot;) |&gt; 
-  drop_na(age, gender, race)
-
-write.csv(combine_df, file = &quot;data/combine.csv&quot;)</code></pre>
 </div>
 
 

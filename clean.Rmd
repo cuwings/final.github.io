@@ -1,46 +1,18 @@
 ---
-title: "Data Sources and Cleaning"
+title: "Clean"
 output: 
   html_document:
     toc: true
     toc_float: true
-    code_folding: "hide"
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(haven)
-
-knitr::opts_chunk$set(
-  warning = FALSE, 
-  message = FALSE,
-  fig.align = 'center')
-
-
-theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-## Data Sources
-The datasets employed in our project originate from two distinct primary sources. 
-
-For part 1, we utilized [PLACES: Local Data for Better Health](https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data) to acquire model-based county estimates of the entire United States during the time period from 2020 to 2021. The data were provided by the CDC, Division of Population Health, Epidemiology and Surveillance Branch.The estimates encompass 36 measures, spanning health outcomes, preventive services use, chronic disease-related health risk behaviors, disabilities, and health status. We are using several health-affecting behavior variables and the prevalence of High Cholesterol to evaluate and sorting out the most correlated risk factors to the outcome at the national level.
-
-For part 2, the resource is from the program [The National Health and Nutrition Examination Survey (NHANES)](https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?Cycle=2017-2020) conducted by the (CDC) for the time period of 2017 to March 2020 Pre-pandemic. It combines interviews and physical examinations to collect a wide range of health-related information. NHANES involves sampling thousand of individuals across different age groups. Unlike the county estimates from part 1, this part provides individual data measurements of demographic characteristics, our selected risk factors from part 1 and our health outcome (High Cholesterol) to generate the regression model. This program divides different types of measuremens into sub-dateset:
-
-* **[TCHOL](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_TCHOL.htm)**: It include the measurement of serum total cholesterol levels to assess the risk of high cholesterol.
-* **[P_DEMO](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_DEMO.htm)**: It provides first part of the individual demographic variables including age, gender, race, marital status, and education level.
-* **[P_BMX](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_BMX.htm)**: Provides second part of the demographic variable, body mass index.
-* **[P_INQ](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_BMX.htm)**: It has third part of the demographic variable, family monthly poverty level index based on participants' monthly income.
-* **[P_PAQ](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_PAQ.htm#PAQ665)**: It provides the first explanatory variable, respondent-level interview data on physical activities.
-* **[P_SLQ](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_SLQ.htm)**: It provides the second explanatory variable, sleep hours in weekdays.
-* **[P_ALQ](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_ALQ.htm#ALQ121)**: Provides the third explanatory variable, subjects' drinking patterns in the past 12 months.
-* **[P_COT](https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_COT.htm)**: Provides the fourth explanatory variable, serum cotinine level, as the primary metabolites of nicotine to estimate the extent of tobacco use.
-
-## Data Import and Tidy
-### Part 1: PLACES: Local Data for Better Health
-
-### Part 2: NHANES
-Loading the `TCHOL` dataset with the data of response variable `total cholesterol`
+### Loading the `TCHOL` dataset with the data of response variable `total cholesterol`
 ```{r}
 tchol_df = 
   data <- read_xpt("data/xpt/P_TCHOL.XPT") |> 
@@ -85,6 +57,7 @@ demo1_df =
       TRUE ~ as.character(education_level_20)) #categorize education level status.
    )
 
+demo1_df
 ```
 
 ### Loading the second demographic dataset `P_BMX` with data of body mass index.
@@ -195,4 +168,3 @@ combine_df =
 
 write.csv(combine_df, file = "data/combine.csv")
 ```
-

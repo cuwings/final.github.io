@@ -7,8 +7,8 @@ navbar:
       href: eda.html
     - text: "Modeling"
       menu:
-        - text: "Clean Data"
-          href: clean.html
+        - text: "Data Sources"
+          href: source.html
         - text: "Exploratory Analysis"
           href: Exploratory-Analysis.html
         - text: "Build Model"
