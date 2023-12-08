@@ -545,68 +545,137 @@ conti_des_df = conti_des_df[, -grep(&quot;variable&quot;, colnames(conti_des_df)
 
 conti_des_df</code></pre>
 <table>
-<colgroup>
-<col width="12%" />
-<col width="14%" />
-<col width="13%" />
-<col width="14%" />
-<col width="13%" />
-<col width="11%" />
-<col width="10%" />
-<col width="9%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left"></th>
-<th align="right">overall_mean</th>
-<th align="right">overall_std</th>
-<th align="right">control_mean</th>
-<th align="right">control_std</th>
-<th align="right">case_mean</th>
-<th align="right">case_std</th>
-<th align="right">p_value</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+overall_mean
+</th>
+<th style="text-align:right;">
+overall_std
+</th>
+<th style="text-align:right;">
+control_mean
+</th>
+<th style="text-align:right;">
+control_std
+</th>
+<th style="text-align:right;">
+case_mean
+</th>
+<th style="text-align:right;">
+case_std
+</th>
+<th style="text-align:right;">
+p_value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">age</td>
-<td align="right">49.414</td>
-<td align="right">18.302</td>
-<td align="right">48.014</td>
-<td align="right">19.312</td>
-<td align="right">52.326</td>
-<td align="right">15.604</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+49.414
+</td>
+<td style="text-align:right;">
+18.302
+</td>
+<td style="text-align:right;">
+48.014
+</td>
+<td style="text-align:right;">
+19.312
+</td>
+<td style="text-align:right;">
+52.326
+</td>
+<td style="text-align:right;">
+15.604
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">bmi</td>
-<td align="right">29.914</td>
-<td align="right">7.536</td>
-<td align="right">29.993</td>
-<td align="right">7.870</td>
-<td align="right">29.750</td>
-<td align="right">6.787</td>
-<td align="right">0.150</td>
+<tr>
+<td style="text-align:left;">
+bmi
+</td>
+<td style="text-align:right;">
+29.914
+</td>
+<td style="text-align:right;">
+7.536
+</td>
+<td style="text-align:right;">
+29.993
+</td>
+<td style="text-align:right;">
+7.870
+</td>
+<td style="text-align:right;">
+29.750
+</td>
+<td style="text-align:right;">
+6.787
+</td>
+<td style="text-align:right;">
+0.150
+</td>
 </tr>
-<tr class="odd">
-<td align="left">sleep_hour</td>
-<td align="right">7.593</td>
-<td align="right">1.667</td>
-<td align="right">7.616</td>
-<td align="right">1.692</td>
-<td align="right">7.546</td>
-<td align="right">1.612</td>
-<td align="right">0.072</td>
+<tr>
+<td style="text-align:left;">
+sleep_hour
+</td>
+<td style="text-align:right;">
+7.593
+</td>
+<td style="text-align:right;">
+1.667
+</td>
+<td style="text-align:right;">
+7.616
+</td>
+<td style="text-align:right;">
+1.692
+</td>
+<td style="text-align:right;">
+7.546
+</td>
+<td style="text-align:right;">
+1.612
+</td>
+<td style="text-align:right;">
+0.072
+</td>
 </tr>
-<tr class="even">
-<td align="left">cotinine</td>
-<td align="right">55.683</td>
-<td align="right">128.581</td>
-<td align="right">57.823</td>
-<td align="right">131.881</td>
-<td align="right">51.232</td>
-<td align="right">121.334</td>
-<td align="right">0.026</td>
+<tr>
+<td style="text-align:left;">
+cotinine
+</td>
+<td style="text-align:right;">
+55.683
+</td>
+<td style="text-align:right;">
+128.581
+</td>
+<td style="text-align:right;">
+57.823
+</td>
+<td style="text-align:right;">
+131.881
+</td>
+<td style="text-align:right;">
+51.232
+</td>
+<td style="text-align:right;">
+121.334
+</td>
+<td style="text-align:right;">
+0.026
+</td>
 </tr>
 </tbody>
 </table>
@@ -743,239 +812,581 @@ cat_des_df = cat_des_df[, !duplicated(names(cat_des_df))] |&gt;
   knitr::kable(digits = 3)
 
 cat_des_df</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="43%" />
-<col width="4%" />
-<col width="5%" />
-<col width="7%" />
-<col width="9%" />
-<col width="11%" />
-<col width="6%" />
-<col width="8%" />
-</colgroup>
+<table>
 <thead>
-<tr class="header">
-<th align="left">variable</th>
-<th align="right">n</th>
-<th align="right">pct</th>
-<th align="right">p_value</th>
-<th align="right">control_n</th>
-<th align="right">control_pct</th>
-<th align="right">case_n</th>
-<th align="right">case_pct</th>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+pct
+</th>
+<th style="text-align:right;">
+p_value
+</th>
+<th style="text-align:right;">
+control_n
+</th>
+<th style="text-align:right;">
+control_pct
+</th>
+<th style="text-align:right;">
+case_n
+</th>
+<th style="text-align:right;">
+case_pct
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Female</td>
-<td align="right">4199</td>
-<td align="right">0.515</td>
-<td align="right">0.000</td>
-<td align="right">2725</td>
-<td align="right">0.494</td>
-<td align="right">1176</td>
-<td align="right">0.444</td>
+<tr>
+<td style="text-align:left;">
+Female
+</td>
+<td style="text-align:right;">
+4199
+</td>
+<td style="text-align:right;">
+0.515
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+2725
+</td>
+<td style="text-align:right;">
+0.494
+</td>
+<td style="text-align:right;">
+1176
+</td>
+<td style="text-align:right;">
+0.444
+</td>
 </tr>
-<tr class="even">
-<td align="left">Male</td>
-<td align="right">3962</td>
-<td align="right">0.485</td>
-<td align="right">0.000</td>
-<td align="right">2786</td>
-<td align="right">0.506</td>
-<td align="right">1474</td>
-<td align="right">0.556</td>
+<tr>
+<td style="text-align:left;">
+Male
+</td>
+<td style="text-align:right;">
+3962
+</td>
+<td style="text-align:right;">
+0.485
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+2786
+</td>
+<td style="text-align:right;">
+0.506
+</td>
+<td style="text-align:right;">
+1474
+</td>
+<td style="text-align:right;">
+0.556
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Non-Hispanic Asian</td>
-<td align="right">977</td>
-<td align="right">0.120</td>
-<td align="right">0.000</td>
-<td align="right">597</td>
-<td align="right">0.108</td>
-<td align="right">963</td>
-<td align="right">0.363</td>
+<tr>
+<td style="text-align:left;">
+Non-Hispanic Asian
+</td>
+<td style="text-align:right;">
+977
+</td>
+<td style="text-align:right;">
+0.120
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+597
+</td>
+<td style="text-align:right;">
+0.108
+</td>
+<td style="text-align:right;">
+963
+</td>
+<td style="text-align:right;">
+0.363
+</td>
 </tr>
-<tr class="even">
-<td align="left">Non-Hispanic White</td>
-<td align="right">2878</td>
-<td align="right">0.353</td>
-<td align="right">0.000</td>
-<td align="right">1915</td>
-<td align="right">0.347</td>
-<td align="right">607</td>
-<td align="right">0.229</td>
+<tr>
+<td style="text-align:left;">
+Non-Hispanic White
+</td>
+<td style="text-align:right;">
+2878
+</td>
+<td style="text-align:right;">
+0.353
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1915
+</td>
+<td style="text-align:right;">
+0.347
+</td>
+<td style="text-align:right;">
+607
+</td>
+<td style="text-align:right;">
+0.229
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Other Race</td>
-<td align="right">396</td>
-<td align="right">0.049</td>
-<td align="right">0.000</td>
-<td align="right">260</td>
-<td align="right">0.047</td>
-<td align="right">380</td>
-<td align="right">0.143</td>
+<tr>
+<td style="text-align:left;">
+Other Race
+</td>
+<td style="text-align:right;">
+396
+</td>
+<td style="text-align:right;">
+0.049
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+260
+</td>
+<td style="text-align:right;">
+0.047
+</td>
+<td style="text-align:right;">
+380
+</td>
+<td style="text-align:right;">
+0.143
+</td>
 </tr>
-<tr class="even">
-<td align="left">Hispanic</td>
-<td align="right">1855</td>
-<td align="right">0.227</td>
-<td align="right">0.000</td>
-<td align="right">1491</td>
-<td align="right">0.271</td>
-<td align="right">564</td>
-<td align="right">0.213</td>
+<tr>
+<td style="text-align:left;">
+Hispanic
+</td>
+<td style="text-align:right;">
+1855
+</td>
+<td style="text-align:right;">
+0.227
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1491
+</td>
+<td style="text-align:right;">
+0.271
+</td>
+<td style="text-align:right;">
+564
+</td>
+<td style="text-align:right;">
+0.213
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Non-Hispanic Black</td>
-<td align="right">2055</td>
-<td align="right">0.252</td>
-<td align="right">0.000</td>
-<td align="right">1248</td>
-<td align="right">0.226</td>
-<td align="right">136</td>
-<td align="right">0.051</td>
+<tr>
+<td style="text-align:left;">
+Non-Hispanic Black
+</td>
+<td style="text-align:right;">
+2055
+</td>
+<td style="text-align:right;">
+0.252
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1248
+</td>
+<td style="text-align:right;">
+0.226
+</td>
+<td style="text-align:right;">
+136
+</td>
+<td style="text-align:right;">
+0.051
+</td>
 </tr>
-<tr class="even">
-<td align="left">Never married</td>
-<td align="right">1497</td>
-<td align="right">0.192</td>
-<td align="right">0.000</td>
-<td align="right">1132</td>
-<td align="right">0.219</td>
-<td align="right">1601</td>
-<td align="right">0.613</td>
+<tr>
+<td style="text-align:left;">
+Never married
+</td>
+<td style="text-align:right;">
+1497
+</td>
+<td style="text-align:right;">
+0.192
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1132
+</td>
+<td style="text-align:right;">
+0.219
+</td>
+<td style="text-align:right;">
+1601
+</td>
+<td style="text-align:right;">
+0.613
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Married/Living with Partner</td>
-<td align="right">4549</td>
-<td align="right">0.584</td>
-<td align="right">0.000</td>
-<td align="right">1093</td>
-<td align="right">0.211</td>
-<td align="right">365</td>
-<td align="right">0.140</td>
+<tr>
+<td style="text-align:left;">
+Married/Living with Partner
+</td>
+<td style="text-align:right;">
+4549
+</td>
+<td style="text-align:right;">
+0.584
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1093
+</td>
+<td style="text-align:right;">
+0.211
+</td>
+<td style="text-align:right;">
+365
+</td>
+<td style="text-align:right;">
+0.140
+</td>
 </tr>
-<tr class="even">
-<td align="left">Widowed/Divorced/Separated</td>
-<td align="right">1740</td>
-<td align="right">0.223</td>
-<td align="right">0.000</td>
-<td align="right">2948</td>
-<td align="right">0.570</td>
-<td align="right">647</td>
-<td align="right">0.248</td>
+<tr>
+<td style="text-align:left;">
+Widowed/Divorced/Separated
+</td>
+<td style="text-align:right;">
+1740
+</td>
+<td style="text-align:right;">
+0.223
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+2948
+</td>
+<td style="text-align:right;">
+0.570
+</td>
+<td style="text-align:right;">
+647
+</td>
+<td style="text-align:right;">
+0.248
+</td>
 </tr>
-<tr class="odd">
-<td align="left">College graduate or above</td>
-<td align="right">1919</td>
-<td align="right">0.247</td>
-<td align="right">0.005</td>
-<td align="right">1218</td>
-<td align="right">0.236</td>
-<td align="right">701</td>
-<td align="right">0.268</td>
+<tr>
+<td style="text-align:left;">
+College graduate or above
+</td>
+<td style="text-align:right;">
+1919
+</td>
+<td style="text-align:right;">
+0.247
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+1218
+</td>
+<td style="text-align:right;">
+0.236
+</td>
+<td style="text-align:right;">
+701
+</td>
+<td style="text-align:right;">
+0.268
+</td>
 </tr>
-<tr class="even">
-<td align="left">9-11th grade</td>
-<td align="right">850</td>
-<td align="right">0.109</td>
-<td align="right">0.005</td>
-<td align="right">571</td>
-<td align="right">0.110</td>
-<td align="right">279</td>
-<td align="right">0.107</td>
+<tr>
+<td style="text-align:left;">
+9-11th grade
+</td>
+<td style="text-align:right;">
+850
+</td>
+<td style="text-align:right;">
+0.109
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+571
+</td>
+<td style="text-align:right;">
+0.110
+</td>
+<td style="text-align:right;">
+279
+</td>
+<td style="text-align:right;">
+0.107
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Some college or AA degree</td>
-<td align="right">2551</td>
-<td align="right">0.328</td>
-<td align="right">0.005</td>
-<td align="right">1694</td>
-<td align="right">0.328</td>
-<td align="right">202</td>
-<td align="right">0.077</td>
+<tr>
+<td style="text-align:left;">
+Some college or AA degree
+</td>
+<td style="text-align:right;">
+2551
+</td>
+<td style="text-align:right;">
+0.328
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+1694
+</td>
+<td style="text-align:right;">
+0.328
+</td>
+<td style="text-align:right;">
+202
+</td>
+<td style="text-align:right;">
+0.077
+</td>
 </tr>
-<tr class="even">
-<td align="left">High school graduate/GED or equivalent</td>
-<td align="right">1873</td>
-<td align="right">0.241</td>
-<td align="right">0.005</td>
-<td align="right">1298</td>
-<td align="right">0.251</td>
-<td align="right">857</td>
-<td align="right">0.328</td>
+<tr>
+<td style="text-align:left;">
+High school graduate/GED or equivalent
+</td>
+<td style="text-align:right;">
+1873
+</td>
+<td style="text-align:right;">
+0.241
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+1298
+</td>
+<td style="text-align:right;">
+0.251
+</td>
+<td style="text-align:right;">
+857
+</td>
+<td style="text-align:right;">
+0.328
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Less than 9th grade</td>
-<td align="right">591</td>
-<td align="right">0.076</td>
-<td align="right">0.005</td>
-<td align="right">389</td>
-<td align="right">0.075</td>
-<td align="right">575</td>
-<td align="right">0.220</td>
+<tr>
+<td style="text-align:left;">
+Less than 9th grade
+</td>
+<td style="text-align:right;">
+591
+</td>
+<td style="text-align:right;">
+0.076
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+389
+</td>
+<td style="text-align:right;">
+0.075
+</td>
+<td style="text-align:right;">
+575
+</td>
+<td style="text-align:right;">
+0.220
+</td>
 </tr>
-<tr class="even">
-<td align="left">Above 185% of Poverty Guidelines</td>
-<td align="right">3388</td>
-<td align="right">0.525</td>
-<td align="right">0.000</td>
-<td align="right">2209</td>
-<td align="right">0.509</td>
-<td align="right">1179</td>
-<td align="right">0.557</td>
+<tr>
+<td style="text-align:left;">
+Above 185% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+3388
+</td>
+<td style="text-align:right;">
+0.525
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+2209
+</td>
+<td style="text-align:right;">
+0.509
+</td>
+<td style="text-align:right;">
+1179
+</td>
+<td style="text-align:right;">
+0.557
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Below 130% of Poverty Guidelines</td>
-<td align="right">2085</td>
-<td align="right">0.323</td>
-<td align="right">0.000</td>
-<td align="right">1472</td>
-<td align="right">0.339</td>
-<td align="right">613</td>
-<td align="right">0.290</td>
+<tr>
+<td style="text-align:left;">
+Below 130% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+2085
+</td>
+<td style="text-align:right;">
+0.323
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1472
+</td>
+<td style="text-align:right;">
+0.339
+</td>
+<td style="text-align:right;">
+613
+</td>
+<td style="text-align:right;">
+0.290
+</td>
 </tr>
-<tr class="even">
-<td align="left">Between 130% and 185% of Poverty Guidelines</td>
-<td align="right">986</td>
-<td align="right">0.153</td>
-<td align="right">0.000</td>
-<td align="right">661</td>
-<td align="right">0.152</td>
-<td align="right">325</td>
-<td align="right">0.154</td>
+<tr>
+<td style="text-align:left;">
+Between 130% and 185% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+986
+</td>
+<td style="text-align:right;">
+0.153
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+661
+</td>
+<td style="text-align:right;">
+0.152
+</td>
+<td style="text-align:right;">
+325
+</td>
+<td style="text-align:right;">
+0.154
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Light Drinker</td>
-<td align="right">3424</td>
-<td align="right">0.493</td>
-<td align="right">0.000</td>
-<td align="right">2378</td>
-<td align="right">0.507</td>
-<td align="right">1046</td>
-<td align="right">0.462</td>
+<tr>
+<td style="text-align:left;">
+Light Drinker
+</td>
+<td style="text-align:right;">
+3424
+</td>
+<td style="text-align:right;">
+0.493
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+2378
+</td>
+<td style="text-align:right;">
+0.507
+</td>
+<td style="text-align:right;">
+1046
+</td>
+<td style="text-align:right;">
+0.462
+</td>
 </tr>
-<tr class="even">
-<td align="left">Moderate Drinker</td>
-<td align="right">2573</td>
-<td align="right">0.370</td>
-<td align="right">0.000</td>
-<td align="right">1736</td>
-<td align="right">0.370</td>
-<td align="right">837</td>
-<td align="right">0.370</td>
+<tr>
+<td style="text-align:left;">
+Moderate Drinker
+</td>
+<td style="text-align:right;">
+2573
+</td>
+<td style="text-align:right;">
+0.370
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1736
+</td>
+<td style="text-align:right;">
+0.370
+</td>
+<td style="text-align:right;">
+837
+</td>
+<td style="text-align:right;">
+0.370
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Heavy Drinker</td>
-<td align="right">955</td>
-<td align="right">0.137</td>
-<td align="right">0.000</td>
-<td align="right">573</td>
-<td align="right">0.122</td>
-<td align="right">382</td>
-<td align="right">0.169</td>
+<tr>
+<td style="text-align:left;">
+Heavy Drinker
+</td>
+<td style="text-align:right;">
+955
+</td>
+<td style="text-align:right;">
+0.137
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+573
+</td>
+<td style="text-align:right;">
+0.122
+</td>
+<td style="text-align:right;">
+382
+</td>
+<td style="text-align:right;">
+0.169
+</td>
 </tr>
 </tbody>
 </table>
@@ -1031,28 +1442,58 @@ fit_1 |&gt;
   knitr::kable(digits = 3)</code></pre>
 <table>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.198</td>
-<td align="right">0.003</td>
-<td align="right">1944.859</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.198
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+1944.859
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="left">cotinine</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">-3.776</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+cotinine
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-3.776
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
@@ -1080,136 +1521,297 @@ fit_cot |&gt;
   broom::tidy() |&gt; 
   knitr::kable(digits = 3)</code></pre>
 <table>
-<colgroup>
-<col width="60%" />
-<col width="9%" />
-<col width="10%" />
-<col width="10%" />
-<col width="8%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.221</td>
-<td align="right">0.015</td>
-<td align="right">354.487</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.221
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+354.487
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">cotinine</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">-0.192</td>
-<td align="right">0.847</td>
+<tr>
+<td style="text-align:left;">
+cotinine
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-0.192
+</td>
+<td style="text-align:right;">
+0.847
+</td>
 </tr>
-<tr class="odd">
-<td align="left">age</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">1.297</td>
-<td align="right">0.195</td>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1.297
+</td>
+<td style="text-align:right;">
+0.195
+</td>
 </tr>
-<tr class="even">
-<td align="left">genderMale</td>
-<td align="right">-0.045</td>
-<td align="right">0.006</td>
-<td align="right">-7.911</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+genderMale
+</td>
+<td style="text-align:right;">
+-0.045
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-7.911
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceNon-Hispanic Asian</td>
-<td align="right">0.013</td>
-<td align="right">0.011</td>
-<td align="right">1.186</td>
-<td align="right">0.236</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Asian
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+1.186
+</td>
+<td style="text-align:right;">
+0.236
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceNon-Hispanic Black</td>
-<td align="right">-0.034</td>
-<td align="right">0.009</td>
-<td align="right">-3.899</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Black
+</td>
+<td style="text-align:right;">
+-0.034
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-3.899
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceNon-Hispanic White</td>
-<td align="right">-0.012</td>
-<td align="right">0.008</td>
-<td align="right">-1.463</td>
-<td align="right">0.144</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic White
+</td>
+<td style="text-align:right;">
+-0.012
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.463
+</td>
+<td style="text-align:right;">
+0.144
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceOther Race</td>
-<td align="right">0.009</td>
-<td align="right">0.014</td>
-<td align="right">0.607</td>
-<td align="right">0.544</td>
+<tr>
+<td style="text-align:left;">
+raceOther Race
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+0.607
+</td>
+<td style="text-align:right;">
+0.544
+</td>
 </tr>
-<tr class="odd">
-<td align="left">marital_statusNever married</td>
-<td align="right">-0.039</td>
-<td align="right">0.008</td>
-<td align="right">-4.903</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+marital_statusNever married
+</td>
+<td style="text-align:right;">
+-0.039
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-4.903
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">marital_statusWidowed/Divorced/Separated</td>
-<td align="right">0.011</td>
-<td align="right">0.007</td>
-<td align="right">1.442</td>
-<td align="right">0.149</td>
+<tr>
+<td style="text-align:left;">
+marital_statusWidowed/Divorced/Separated
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+1.442
+</td>
+<td style="text-align:right;">
+0.149
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20College graduate or above</td>
-<td align="right">0.026</td>
-<td align="right">0.011</td>
-<td align="right">2.361</td>
-<td align="right">0.018</td>
+<tr>
+<td style="text-align:left;">
+education_level_20College graduate or above
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+2.361
+</td>
+<td style="text-align:right;">
+0.018
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20High school graduate/GED or
-equivalent</td>
-<td align="right">-0.005</td>
-<td align="right">0.010</td>
-<td align="right">-0.471</td>
-<td align="right">0.638</td>
+<tr>
+<td style="text-align:left;">
+education_level_20High school graduate/GED or equivalent
+</td>
+<td style="text-align:right;">
+-0.005
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+-0.471
+</td>
+<td style="text-align:right;">
+0.638
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20Less than 9th grade</td>
-<td align="right">0.013</td>
-<td align="right">0.014</td>
-<td align="right">0.893</td>
-<td align="right">0.372</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Less than 9th grade
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+0.893
+</td>
+<td style="text-align:right;">
+0.372
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20Some college or AA degree</td>
-<td align="right">0.010</td>
-<td align="right">0.010</td>
-<td align="right">1.006</td>
-<td align="right">0.314</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Some college or AA degree
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+1.006
+</td>
+<td style="text-align:right;">
+0.314
+</td>
 </tr>
-<tr class="odd">
-<td align="left">poverty_levelBelow 130% of Poverty Guidelines</td>
-<td align="right">-0.013</td>
-<td align="right">0.007</td>
-<td align="right">-1.811</td>
-<td align="right">0.070</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBelow 130% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+-0.013
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+-1.811
+</td>
+<td style="text-align:right;">
+0.070
+</td>
 </tr>
-<tr class="even">
-<td align="left">poverty_levelBetween 130% and 185% of Poverty
-Guidelines</td>
-<td align="right">-0.002</td>
-<td align="right">0.008</td>
-<td align="right">-0.214</td>
-<td align="right">0.831</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBetween 130% and 185% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+-0.002
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-0.214
+</td>
+<td style="text-align:right;">
+0.831
+</td>
 </tr>
 </tbody>
 </table>
@@ -1229,43 +1831,76 @@ fit_2 |&gt;
   broom::tidy() |&gt; 
   knitr::kable(digits = 3)</code></pre>
 <table>
-<colgroup>
-<col width="48%" />
-<col width="12%" />
-<col width="13%" />
-<col width="13%" />
-<col width="11%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.197</td>
-<td align="right">0.005</td>
-<td align="right">1039.540</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.197
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+1039.540
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">physical_activityModerate activity</td>
-<td align="right">0.004</td>
-<td align="right">0.007</td>
-<td align="right">0.599</td>
-<td align="right">0.549</td>
+<tr>
+<td style="text-align:left;">
+physical_activityModerate activity
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+0.599
+</td>
+<td style="text-align:right;">
+0.549
+</td>
 </tr>
-<tr class="odd">
-<td align="left">physical_activityVigorous activity</td>
-<td align="right">-0.010</td>
-<td align="right">0.006</td>
-<td align="right">-1.570</td>
-<td align="right">0.117</td>
+<tr>
+<td style="text-align:left;">
+physical_activityVigorous activity
+</td>
+<td style="text-align:right;">
+-0.010
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-1.570
+</td>
+<td style="text-align:right;">
+0.117
+</td>
 </tr>
 </tbody>
 </table>
@@ -1293,143 +1928,314 @@ fit_phy |&gt;
   broom::tidy() |&gt; 
   knitr::kable(digits = 3)</code></pre>
 <table>
-<colgroup>
-<col width="60%" />
-<col width="9%" />
-<col width="10%" />
-<col width="10%" />
-<col width="8%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.212</td>
-<td align="right">0.016</td>
-<td align="right">323.926</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.212
+</td>
+<td style="text-align:right;">
+0.016
+</td>
+<td style="text-align:right;">
+323.926
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">physical_activityModerate activity</td>
-<td align="right">0.006</td>
-<td align="right">0.007</td>
-<td align="right">0.773</td>
-<td align="right">0.439</td>
+<tr>
+<td style="text-align:left;">
+physical_activityModerate activity
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+0.773
+</td>
+<td style="text-align:right;">
+0.439
+</td>
 </tr>
-<tr class="odd">
-<td align="left">physical_activityVigorous activity</td>
-<td align="right">0.010</td>
-<td align="right">0.008</td>
-<td align="right">1.278</td>
-<td align="right">0.201</td>
+<tr>
+<td style="text-align:left;">
+physical_activityVigorous activity
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+1.278
+</td>
+<td style="text-align:right;">
+0.201
+</td>
 </tr>
-<tr class="even">
-<td align="left">age</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">1.608</td>
-<td align="right">0.108</td>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1.608
+</td>
+<td style="text-align:right;">
+0.108
+</td>
 </tr>
-<tr class="odd">
-<td align="left">genderMale</td>
-<td align="right">-0.047</td>
-<td align="right">0.006</td>
-<td align="right">-8.062</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+genderMale
+</td>
+<td style="text-align:right;">
+-0.047
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-8.062
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceNon-Hispanic Asian</td>
-<td align="right">0.013</td>
-<td align="right">0.011</td>
-<td align="right">1.229</td>
-<td align="right">0.219</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Asian
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+1.229
+</td>
+<td style="text-align:right;">
+0.219
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceNon-Hispanic Black</td>
-<td align="right">-0.034</td>
-<td align="right">0.009</td>
-<td align="right">-3.937</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Black
+</td>
+<td style="text-align:right;">
+-0.034
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-3.937
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceNon-Hispanic White</td>
-<td align="right">-0.012</td>
-<td align="right">0.008</td>
-<td align="right">-1.524</td>
-<td align="right">0.128</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic White
+</td>
+<td style="text-align:right;">
+-0.012
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.524
+</td>
+<td style="text-align:right;">
+0.128
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceOther Race</td>
-<td align="right">0.008</td>
-<td align="right">0.014</td>
-<td align="right">0.528</td>
-<td align="right">0.597</td>
+<tr>
+<td style="text-align:left;">
+raceOther Race
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+0.528
+</td>
+<td style="text-align:right;">
+0.597
+</td>
 </tr>
-<tr class="even">
-<td align="left">marital_statusNever married</td>
-<td align="right">-0.039</td>
-<td align="right">0.008</td>
-<td align="right">-4.897</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+marital_statusNever married
+</td>
+<td style="text-align:right;">
+-0.039
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-4.897
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">marital_statusWidowed/Divorced/Separated</td>
-<td align="right">0.010</td>
-<td align="right">0.007</td>
-<td align="right">1.409</td>
-<td align="right">0.159</td>
+<tr>
+<td style="text-align:left;">
+marital_statusWidowed/Divorced/Separated
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+1.409
+</td>
+<td style="text-align:right;">
+0.159
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20College graduate or above</td>
-<td align="right">0.025</td>
-<td align="right">0.011</td>
-<td align="right">2.315</td>
-<td align="right">0.021</td>
+<tr>
+<td style="text-align:left;">
+education_level_20College graduate or above
+</td>
+<td style="text-align:right;">
+0.025
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+2.315
+</td>
+<td style="text-align:right;">
+0.021
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20High school graduate/GED or
-equivalent</td>
-<td align="right">-0.005</td>
-<td align="right">0.010</td>
-<td align="right">-0.515</td>
-<td align="right">0.607</td>
+<tr>
+<td style="text-align:left;">
+education_level_20High school graduate/GED or equivalent
+</td>
+<td style="text-align:right;">
+-0.005
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+-0.515
+</td>
+<td style="text-align:right;">
+0.607
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20Less than 9th grade</td>
-<td align="right">0.013</td>
-<td align="right">0.014</td>
-<td align="right">0.909</td>
-<td align="right">0.364</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Less than 9th grade
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+0.909
+</td>
+<td style="text-align:right;">
+0.364
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20Some college or AA degree</td>
-<td align="right">0.010</td>
-<td align="right">0.010</td>
-<td align="right">0.971</td>
-<td align="right">0.332</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Some college or AA degree
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+<td style="text-align:right;">
+0.332
+</td>
 </tr>
-<tr class="even">
-<td align="left">poverty_levelBelow 130% of Poverty Guidelines</td>
-<td align="right">-0.012</td>
-<td align="right">0.007</td>
-<td align="right">-1.731</td>
-<td align="right">0.083</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBelow 130% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+-0.012
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+-1.731
+</td>
+<td style="text-align:right;">
+0.083
+</td>
 </tr>
-<tr class="odd">
-<td align="left">poverty_levelBetween 130% and 185% of Poverty
-Guidelines</td>
-<td align="right">-0.001</td>
-<td align="right">0.008</td>
-<td align="right">-0.150</td>
-<td align="right">0.881</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBetween 130% and 185% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+-0.001
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-0.150
+</td>
+<td style="text-align:right;">
+0.881
+</td>
 </tr>
 </tbody>
 </table>
@@ -1448,44 +2254,77 @@ alcohol_use_cat</h4>
 fit_3 |&gt; 
   broom::tidy() |&gt; 
   knitr::kable(digits = 3)</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="46%" />
-<col width="13%" />
-<col width="14%" />
-<col width="14%" />
-<col width="11%" />
-</colgroup>
+<table>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.235</td>
-<td align="right">0.007</td>
-<td align="right">729.265</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.235
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+729.265
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="left">alcohol_use_catLight Drinker</td>
-<td align="right">-0.054</td>
-<td align="right">0.008</td>
-<td align="right">-6.703</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+alcohol_use_catLight Drinker
+</td>
+<td style="text-align:right;">
+-0.054
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-6.703
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="odd">
-<td align="left">alcohol_use_catModerate Drinker</td>
-<td align="right">-0.040</td>
-<td align="right">0.008</td>
-<td align="right">-4.732</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+alcohol_use_catModerate Drinker
+</td>
+<td style="text-align:right;">
+-0.040
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-4.732
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
@@ -1513,143 +2352,314 @@ fit_alc |&gt;
   broom::tidy() |&gt; 
   knitr::kable(digits = 3)</code></pre>
 <table>
-<colgroup>
-<col width="60%" />
-<col width="9%" />
-<col width="10%" />
-<col width="10%" />
-<col width="8%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.281</td>
-<td align="right">0.018</td>
-<td align="right">296.615</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.281
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+296.615
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">alcohol_use_catLight Drinker</td>
-<td align="right">-0.066</td>
-<td align="right">0.009</td>
-<td align="right">-7.277</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+alcohol_use_catLight Drinker
+</td>
+<td style="text-align:right;">
+-0.066
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-7.277
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">alcohol_use_catModerate Drinker</td>
-<td align="right">-0.046</td>
-<td align="right">0.009</td>
-<td align="right">-4.884</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+alcohol_use_catModerate Drinker
+</td>
+<td style="text-align:right;">
+-0.046
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-4.884
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">age</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">1.045</td>
-<td align="right">0.296</td>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1.045
+</td>
+<td style="text-align:right;">
+0.296
+</td>
 </tr>
-<tr class="odd">
-<td align="left">genderMale</td>
-<td align="right">-0.056</td>
-<td align="right">0.006</td>
-<td align="right">-9.141</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+genderMale
+</td>
+<td style="text-align:right;">
+-0.056
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-9.141
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceNon-Hispanic Asian</td>
-<td align="right">0.019</td>
-<td align="right">0.013</td>
-<td align="right">1.516</td>
-<td align="right">0.130</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Asian
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+1.516
+</td>
+<td style="text-align:right;">
+0.130
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceNon-Hispanic Black</td>
-<td align="right">-0.038</td>
-<td align="right">0.009</td>
-<td align="right">-4.099</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Black
+</td>
+<td style="text-align:right;">
+-0.038
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-4.099
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceNon-Hispanic White</td>
-<td align="right">-0.015</td>
-<td align="right">0.009</td>
-<td align="right">-1.734</td>
-<td align="right">0.083</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic White
+</td>
+<td style="text-align:right;">
+-0.015
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-1.734
+</td>
+<td style="text-align:right;">
+0.083
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceOther Race</td>
-<td align="right">0.010</td>
-<td align="right">0.015</td>
-<td align="right">0.699</td>
-<td align="right">0.485</td>
+<tr>
+<td style="text-align:left;">
+raceOther Race
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+0.699
+</td>
+<td style="text-align:right;">
+0.485
+</td>
 </tr>
-<tr class="even">
-<td align="left">marital_statusNever married</td>
-<td align="right">-0.039</td>
-<td align="right">0.009</td>
-<td align="right">-4.587</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+marital_statusNever married
+</td>
+<td style="text-align:right;">
+-0.039
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-4.587
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">marital_statusWidowed/Divorced/Separated</td>
-<td align="right">0.012</td>
-<td align="right">0.008</td>
-<td align="right">1.504</td>
-<td align="right">0.133</td>
+<tr>
+<td style="text-align:left;">
+marital_statusWidowed/Divorced/Separated
+</td>
+<td style="text-align:right;">
+0.012
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+1.504
+</td>
+<td style="text-align:right;">
+0.133
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20College graduate or above</td>
-<td align="right">0.021</td>
-<td align="right">0.012</td>
-<td align="right">1.758</td>
-<td align="right">0.079</td>
+<tr>
+<td style="text-align:left;">
+education_level_20College graduate or above
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+0.012
+</td>
+<td style="text-align:right;">
+1.758
+</td>
+<td style="text-align:right;">
+0.079
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20High school graduate/GED or
-equivalent</td>
-<td align="right">-0.009</td>
-<td align="right">0.011</td>
-<td align="right">-0.815</td>
-<td align="right">0.415</td>
+<tr>
+<td style="text-align:left;">
+education_level_20High school graduate/GED or equivalent
+</td>
+<td style="text-align:right;">
+-0.009
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+-0.815
+</td>
+<td style="text-align:right;">
+0.415
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20Less than 9th grade</td>
-<td align="right">0.031</td>
-<td align="right">0.017</td>
-<td align="right">1.852</td>
-<td align="right">0.064</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Less than 9th grade
+</td>
+<td style="text-align:right;">
+0.031
+</td>
+<td style="text-align:right;">
+0.017
+</td>
+<td style="text-align:right;">
+1.852
+</td>
+<td style="text-align:right;">
+0.064
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20Some college or AA degree</td>
-<td align="right">0.008</td>
-<td align="right">0.011</td>
-<td align="right">0.730</td>
-<td align="right">0.465</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Some college or AA degree
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+0.730
+</td>
+<td style="text-align:right;">
+0.465
+</td>
 </tr>
-<tr class="even">
-<td align="left">poverty_levelBelow 130% of Poverty Guidelines</td>
-<td align="right">-0.014</td>
-<td align="right">0.008</td>
-<td align="right">-1.881</td>
-<td align="right">0.060</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBelow 130% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+-0.014
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.881
+</td>
+<td style="text-align:right;">
+0.060
+</td>
 </tr>
-<tr class="odd">
-<td align="left">poverty_levelBetween 130% and 185% of Poverty
-Guidelines</td>
-<td align="right">0.002</td>
-<td align="right">0.009</td>
-<td align="right">0.277</td>
-<td align="right">0.782</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBetween 130% and 185% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+0.277
+</td>
+<td style="text-align:right;">
+0.782
+</td>
 </tr>
 </tbody>
 </table>
@@ -1669,164 +2679,365 @@ fit_full |&gt;
   broom::tidy() |&gt; 
   knitr::kable(digits = 3)</code></pre>
 <table>
-<colgroup>
-<col width="60%" />
-<col width="9%" />
-<col width="10%" />
-<col width="10%" />
-<col width="8%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">std.error</th>
-<th align="right">statistic</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">5.277</td>
-<td align="right">0.019</td>
-<td align="right">272.405</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.277
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+272.405
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">cotinine</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">-0.350</td>
-<td align="right">0.727</td>
+<tr>
+<td style="text-align:left;">
+cotinine
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+-0.350
+</td>
+<td style="text-align:right;">
+0.727
+</td>
 </tr>
-<tr class="odd">
-<td align="left">physical_activityModerate activity</td>
-<td align="right">0.007</td>
-<td align="right">0.008</td>
-<td align="right">0.822</td>
-<td align="right">0.411</td>
+<tr>
+<td style="text-align:left;">
+physical_activityModerate activity
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+0.822
+</td>
+<td style="text-align:right;">
+0.411
+</td>
 </tr>
-<tr class="even">
-<td align="left">physical_activityVigorous activity</td>
-<td align="right">0.006</td>
-<td align="right">0.008</td>
-<td align="right">0.686</td>
-<td align="right">0.493</td>
+<tr>
+<td style="text-align:left;">
+physical_activityVigorous activity
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+0.686
+</td>
+<td style="text-align:right;">
+0.493
+</td>
 </tr>
-<tr class="odd">
-<td align="left">alcohol_use_catLight Drinker</td>
-<td align="right">-0.066</td>
-<td align="right">0.009</td>
-<td align="right">-7.220</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+alcohol_use_catLight Drinker
+</td>
+<td style="text-align:right;">
+-0.066
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-7.220
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">alcohol_use_catModerate Drinker</td>
-<td align="right">-0.046</td>
-<td align="right">0.009</td>
-<td align="right">-4.889</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+alcohol_use_catModerate Drinker
+</td>
+<td style="text-align:right;">
+-0.046
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-4.889
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">age</td>
-<td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">1.070</td>
-<td align="right">0.285</td>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+1.070
+</td>
+<td style="text-align:right;">
+0.285
+</td>
 </tr>
-<tr class="even">
-<td align="left">genderMale</td>
-<td align="right">-0.056</td>
-<td align="right">0.006</td>
-<td align="right">-8.936</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+genderMale
+</td>
+<td style="text-align:right;">
+-0.056
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+<td style="text-align:right;">
+-8.936
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceNon-Hispanic Asian</td>
-<td align="right">0.019</td>
-<td align="right">0.013</td>
-<td align="right">1.510</td>
-<td align="right">0.131</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Asian
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+<td style="text-align:right;">
+1.510
+</td>
+<td style="text-align:right;">
+0.131
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceNon-Hispanic Black</td>
-<td align="right">-0.038</td>
-<td align="right">0.009</td>
-<td align="right">-4.008</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic Black
+</td>
+<td style="text-align:right;">
+-0.038
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-4.008
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">raceNon-Hispanic White</td>
-<td align="right">-0.015</td>
-<td align="right">0.009</td>
-<td align="right">-1.678</td>
-<td align="right">0.093</td>
+<tr>
+<td style="text-align:left;">
+raceNon-Hispanic White
+</td>
+<td style="text-align:right;">
+-0.015
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-1.678
+</td>
+<td style="text-align:right;">
+0.093
+</td>
 </tr>
-<tr class="even">
-<td align="left">raceOther Race</td>
-<td align="right">0.011</td>
-<td align="right">0.015</td>
-<td align="right">0.718</td>
-<td align="right">0.473</td>
+<tr>
+<td style="text-align:left;">
+raceOther Race
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+0.718
+</td>
+<td style="text-align:right;">
+0.473
+</td>
 </tr>
-<tr class="odd">
-<td align="left">marital_statusNever married</td>
-<td align="right">-0.040</td>
-<td align="right">0.009</td>
-<td align="right">-4.601</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+marital_statusNever married
+</td>
+<td style="text-align:right;">
+-0.040
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+-4.601
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">marital_statusWidowed/Divorced/Separated</td>
-<td align="right">0.012</td>
-<td align="right">0.008</td>
-<td align="right">1.532</td>
-<td align="right">0.126</td>
+<tr>
+<td style="text-align:left;">
+marital_statusWidowed/Divorced/Separated
+</td>
+<td style="text-align:right;">
+0.012
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+1.532
+</td>
+<td style="text-align:right;">
+0.126
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20College graduate or above</td>
-<td align="right">0.020</td>
-<td align="right">0.012</td>
-<td align="right">1.648</td>
-<td align="right">0.100</td>
+<tr>
+<td style="text-align:left;">
+education_level_20College graduate or above
+</td>
+<td style="text-align:right;">
+0.020
+</td>
+<td style="text-align:right;">
+0.012
+</td>
+<td style="text-align:right;">
+1.648
+</td>
+<td style="text-align:right;">
+0.100
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20High school graduate/GED or
-equivalent</td>
-<td align="right">-0.010</td>
-<td align="right">0.011</td>
-<td align="right">-0.857</td>
-<td align="right">0.391</td>
+<tr>
+<td style="text-align:left;">
+education_level_20High school graduate/GED or equivalent
+</td>
+<td style="text-align:right;">
+-0.010
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+-0.857
+</td>
+<td style="text-align:right;">
+0.391
+</td>
 </tr>
-<tr class="odd">
-<td align="left">education_level_20Less than 9th grade</td>
-<td align="right">0.030</td>
-<td align="right">0.017</td>
-<td align="right">1.820</td>
-<td align="right">0.069</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Less than 9th grade
+</td>
+<td style="text-align:right;">
+0.030
+</td>
+<td style="text-align:right;">
+0.017
+</td>
+<td style="text-align:right;">
+1.820
+</td>
+<td style="text-align:right;">
+0.069
+</td>
 </tr>
-<tr class="even">
-<td align="left">education_level_20Some college or AA degree</td>
-<td align="right">0.007</td>
-<td align="right">0.011</td>
-<td align="right">0.663</td>
-<td align="right">0.508</td>
+<tr>
+<td style="text-align:left;">
+education_level_20Some college or AA degree
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+0.011
+</td>
+<td style="text-align:right;">
+0.663
+</td>
+<td style="text-align:right;">
+0.508
+</td>
 </tr>
-<tr class="odd">
-<td align="left">poverty_levelBelow 130% of Poverty Guidelines</td>
-<td align="right">-0.013</td>
-<td align="right">0.008</td>
-<td align="right">-1.778</td>
-<td align="right">0.075</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBelow 130% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+-0.013
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+-1.778
+</td>
+<td style="text-align:right;">
+0.075
+</td>
 </tr>
-<tr class="even">
-<td align="left">poverty_levelBetween 130% and 185% of Poverty
-Guidelines</td>
-<td align="right">0.003</td>
-<td align="right">0.009</td>
-<td align="right">0.338</td>
-<td align="right">0.735</td>
+<tr>
+<td style="text-align:left;">
+poverty_levelBetween 130% and 185% of Poverty Guidelines
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+0.338
+</td>
+<td style="text-align:right;">
+0.735
+</td>
 </tr>
 </tbody>
 </table>
@@ -1849,40 +3060,40 @@ summary(test_aic)</code></pre>
 ## -0.98018 -0.14515  0.00187  0.14798  0.92464 
 ## 
 ## Coefficients:
-##                                                           Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)                                               5.291661   0.014773 358.207  &lt; 2e-16
-## alcohol_use_catLight Drinker                             -0.066035   0.009119  -7.242 5.06e-13
-## alcohol_use_catModerate Drinker                          -0.046470   0.009319  -4.987 6.33e-07
-## genderMale                                               -0.055600   0.006121  -9.084  &lt; 2e-16
-## raceNon-Hispanic Asian                                    0.019256   0.012542   1.535   0.1248
-## raceNon-Hispanic Black                                   -0.037329   0.009297  -4.015 6.02e-05
-## raceNon-Hispanic White                                   -0.013509   0.008446  -1.599   0.1098
-## raceOther Race                                            0.010565   0.014961   0.706   0.4801
-## marital_statusNever married                              -0.042028   0.008227  -5.109 3.35e-07
-## marital_statusWidowed/Divorced/Separated                  0.013753   0.007551   1.821   0.0686
-## education_level_20College graduate or above               0.020305   0.011820   1.718   0.0859
-## education_level_20High school graduate/GED or equivalent -0.009487   0.011201  -0.847   0.3971
-## education_level_20Less than 9th grade                     0.031655   0.016478   1.921   0.0548
-## education_level_20Some college or AA degree               0.007220   0.010858   0.665   0.5061
-## poverty_levelBelow 130% of Poverty Guidelines            -0.015045   0.007450  -2.019   0.0435
-## poverty_levelBetween 130% and 185% of Poverty Guidelines  0.002317   0.008895   0.260   0.7945
-##                                                             
-## (Intercept)                                              ***
-## alcohol_use_catLight Drinker                             ***
-## alcohol_use_catModerate Drinker                          ***
-## genderMale                                               ***
-## raceNon-Hispanic Asian                                      
-## raceNon-Hispanic Black                                   ***
-## raceNon-Hispanic White                                      
-## raceOther Race                                              
-## marital_statusNever married                              ***
-## marital_statusWidowed/Divorced/Separated                 .  
-## education_level_20College graduate or above              .  
-## education_level_20High school graduate/GED or equivalent    
-## education_level_20Less than 9th grade                    .  
-## education_level_20Some college or AA degree                 
-## poverty_levelBelow 130% of Poverty Guidelines            *  
-## poverty_levelBetween 130% and 185% of Poverty Guidelines    
+##                                                           Estimate Std. Error t value
+## (Intercept)                                               5.291661   0.014773 358.207
+## alcohol_use_catLight Drinker                             -0.066035   0.009119  -7.242
+## alcohol_use_catModerate Drinker                          -0.046470   0.009319  -4.987
+## genderMale                                               -0.055600   0.006121  -9.084
+## raceNon-Hispanic Asian                                    0.019256   0.012542   1.535
+## raceNon-Hispanic Black                                   -0.037329   0.009297  -4.015
+## raceNon-Hispanic White                                   -0.013509   0.008446  -1.599
+## raceOther Race                                            0.010565   0.014961   0.706
+## marital_statusNever married                              -0.042028   0.008227  -5.109
+## marital_statusWidowed/Divorced/Separated                  0.013753   0.007551   1.821
+## education_level_20College graduate or above               0.020305   0.011820   1.718
+## education_level_20High school graduate/GED or equivalent -0.009487   0.011201  -0.847
+## education_level_20Less than 9th grade                     0.031655   0.016478   1.921
+## education_level_20Some college or AA degree               0.007220   0.010858   0.665
+## poverty_levelBelow 130% of Poverty Guidelines            -0.015045   0.007450  -2.019
+## poverty_levelBetween 130% and 185% of Poverty Guidelines  0.002317   0.008895   0.260
+##                                                          Pr(&gt;|t|)    
+## (Intercept)                                               &lt; 2e-16 ***
+## alcohol_use_catLight Drinker                             5.06e-13 ***
+## alcohol_use_catModerate Drinker                          6.33e-07 ***
+## genderMale                                                &lt; 2e-16 ***
+## raceNon-Hispanic Asian                                     0.1248    
+## raceNon-Hispanic Black                                   6.02e-05 ***
+## raceNon-Hispanic White                                     0.1098    
+## raceOther Race                                             0.4801    
+## marital_statusNever married                              3.35e-07 ***
+## marital_statusWidowed/Divorced/Separated                   0.0686 .  
+## education_level_20College graduate or above                0.0859 .  
+## education_level_20High school graduate/GED or equivalent   0.3971    
+## education_level_20Less than 9th grade                      0.0548 .  
+## education_level_20Some college or AA degree                0.5061    
+## poverty_levelBelow 130% of Poverty Guidelines              0.0435 *  
+## poverty_levelBetween 130% and 185% of Poverty Guidelines   0.7945    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -2115,19 +3326,35 @@ cbind(rsquare_fit_cot, rsquare_fit_phy, rsquare_fit_alc, rsquare_fit_full) |&gt;
   knitr::kable()</code></pre>
 <table>
 <thead>
-<tr class="header">
-<th align="right">rsquare_fit_cot</th>
-<th align="right">rsquare_fit_phy</th>
-<th align="right">rsquare_fit_alc</th>
-<th align="right">rsquare_fit_full</th>
+<tr>
+<th style="text-align:right;">
+rsquare_fit_cot
+</th>
+<th style="text-align:right;">
+rsquare_fit_phy
+</th>
+<th style="text-align:right;">
+rsquare_fit_alc
+</th>
+<th style="text-align:right;">
+rsquare_fit_full
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">0.0280454</td>
-<td align="right">0.0282958</td>
-<td align="right">0.0287445</td>
-<td align="right">0.0289015</td>
+<tr>
+<td style="text-align:right;">
+0.0280454
+</td>
+<td style="text-align:right;">
+0.0282958
+</td>
+<td style="text-align:right;">
+0.0287445
+</td>
+<td style="text-align:right;">
+0.0289015
+</td>
 </tr>
 </tbody>
 </table>
