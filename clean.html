@@ -11,7 +11,7 @@
 
 
 
-<title>Clean</title>
+<title>Data Sources and Cleaning</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,7 +29,11 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
@@ -218,7 +222,73 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
 
 
 
@@ -228,6 +298,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -307,18 +387,93 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Clean</h1>
+
+<h1 class="title toc-ignore">Data Sources and Cleaning</h1>
 
 </div>
 
 
-<div
-id="loading-the-tchol-dataset-with-the-data-of-response-variable-total-cholesterol"
+<div id="data-sources" class="section level2">
+<h2>Data Sources</h2>
+<p>The datasets employed in our project originate from two distinct
+primary sources.</p>
+<p>For part 1, we utilized <a
+href="https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data">PLACES:
+Local Data for Better Health</a> to acquire model-based county estimates
+of the entire United States during the time period from 2020 to 2021.
+The data were provided by the CDC, Division of Population Health,
+Epidemiology and Surveillance Branch.The estimates encompass 36
+measures, spanning health outcomes, preventive services use, chronic
+disease-related health risk behaviors, disabilities, and health status.
+We are using several health-affecting behavior variables and the
+prevalence of High Cholesterol to evaluate and sorting out the most
+correlated risk factors to the outcome at the national level.</p>
+<p>For part 2, the resource is from the program <a
+href="https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?Cycle=2017-2020">The
+National Health and Nutrition Examination Survey (NHANES)</a> conducted
+by the (CDC) for the time period of 2017 to March 2020 Pre-pandemic. It
+combines interviews and physical examinations to collect a wide range of
+health-related information. NHANES involves sampling thousand of
+individuals across different age groups. Unlike the county estimates
+from part 1, this part provides individual data measurements of
+demographic characteristics, our selected risk factors from part 1 and
+our health outcome (High Cholesterol) to generate the regression model.
+This program divides different types of measuremens into
+sub-dateset:</p>
+<ul>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_TCHOL.htm">TCHOL</a></strong>:
+It include the measurement of serum total cholesterol levels to assess
+the risk of high cholesterol.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_DEMO.htm">P_DEMO</a></strong>:
+It provides first part of the individual demographic variables including
+age, gender, race, marital status, and education level.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_BMX.htm">P_BMX</a></strong>:
+Provides second part of the demographic variable, body mass index.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_BMX.htm">P_INQ</a></strong>:
+It has third part of the demographic variable, family monthly poverty
+level index based on participants’ monthly income.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_PAQ.htm#PAQ665">P_PAQ</a></strong>:
+It provides the first explanatory variable, respondent-level interview
+data on physical activities.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_SLQ.htm">P_SLQ</a></strong>:
+It provides the second explanatory variable, sleep hours in
+weekdays.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_ALQ.htm#ALQ121">P_ALQ</a></strong>:
+Provides the third explanatory variable, subjects’ drinking patterns in
+the past 12 months.</li>
+<li><strong><a
+href="https://wwwn.cdc.gov/Nchs/Nhanes/2017-2018/P_COT.htm">P_COT</a></strong>:
+Provides the fourth explanatory variable, serum cotinine level, as the
+primary metabolites of nicotine to estimate the extent of tobacco
+use.</li>
+</ul>
+</div>
+<div id="data-import-and-tidy" class="section level2">
+<h2>Data Import and Tidy</h2>
+<div id="part-1-places-local-data-for-better-health"
 class="section level3">
-<h3>Loading the <code>TCHOL</code> dataset with the data of response
-variable <code>total cholesterol</code></h3>
+<h3>Part 1: PLACES: Local Data for Better Health</h3>
+</div>
+<div id="part-2-nhanes" class="section level3">
+<h3>Part 2: NHANES</h3>
+<p>Loading the <code>TCHOL</code> dataset with the data of response
+variable <code>total cholesterol</code></p>
 <pre class="r"><code>tchol_df = 
   data &lt;- read_xpt(&quot;data/xpt/P_TCHOL.XPT&quot;) |&gt; 
   janitor::clean_names() |&gt;
@@ -360,23 +515,7 @@ class="section level3">
       education_level_20 == 4 ~ &quot;Some college or AA degree&quot;,
       education_level_20 == 5 ~ &quot;College graduate or above&quot;,
       TRUE ~ as.character(education_level_20)) #categorize education level status.
-   )
-
-demo1_df</code></pre>
-<pre><code>## # A tibble: 9,693 × 6
-##        id   age gender race               marital_status      education_level_20
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;             
-##  1 109266    29 Female Non-Hispanic Asian Never married       College graduate …
-##  2 109267    21 Female Hispanic           Never married       Some college or A…
-##  3 109268    18 Female Non-Hispanic White &lt;NA&gt;                &lt;NA&gt;              
-##  4 109271    49 Male   Non-Hispanic White Never married       9-11th grade      
-##  5 109273    36 Male   Non-Hispanic White Never married       Some college or A…
-##  6 109274    68 Male   Other Race         Never married       Some college or A…
-##  7 109282    76 Male   Non-Hispanic White Married/Living wit… College graduate …
-##  8 109283    52 Male   Other Race         Widowed/Divorced/S… High school gradu…
-##  9 109284    44 Female Hispanic           Married/Living wit… 9-11th grade      
-## 10 109286    33 Female Non-Hispanic Asian Married/Living wit… College graduate …
-## # ℹ 9,683 more rows</code></pre>
+   )</code></pre>
 </div>
 <div
 id="loading-the-second-demographic-dataset-p_bmx-with-data-of-body-mass-index."
@@ -498,9 +637,12 @@ dataset <code>P_COT</code>.</h3>
 
 write.csv(combine_df, file = &quot;data/combine.csv&quot;)</code></pre>
 </div>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -532,7 +674,41 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
